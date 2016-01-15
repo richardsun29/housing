@@ -14,6 +14,10 @@ angular.module('starter.controllers', [])
   };
 })
 
+.controller('FeaturedDetailCtrl', function($scope, $stateParams, Apartments) {
+  $scope.apt = Apartments.getId($stateParams.id);
+  console.log($scope.apt);
+})
 
 .controller('ListCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

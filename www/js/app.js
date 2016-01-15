@@ -50,11 +50,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
   .state('tab.featured-detail', {
-    url: '/featured/:featuredId',
+    url: '/featured/:id',
     views: {
       'tab-featured': {
         templateUrl: 'templates/featured/detail.html',
-        constroller: 'FeaturedDetailCtrl'
+        controller: 'FeaturedDetailCtrl'
       }
     }
   })
@@ -69,7 +69,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
     .state('tab.list-detail', {
-      url: '/list/:chatId',
+      url: '/list/:id',
       views: {
         'tab-list': {
           templateUrl: 'templates/chat-detail.html',

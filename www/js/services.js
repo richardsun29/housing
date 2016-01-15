@@ -21,7 +21,9 @@ angular.module('starter.services', [])
   };
 
   apt.get = function() { return getApts() };
-  apt.getId = function(id) { return apartments[id] };
+  apt.getId = function(id) {
+    return apartments[id] || {};
+  };
   return apt;
 })
 
