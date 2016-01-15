@@ -50,11 +50,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
   .state('tab.featured-detail', {
-    url: '/apartment/:id',
+    url: '/apartments/featured/:id',
     views: {
       'tab-featured': {
         templateUrl: 'templates/featured/detail.html',
-        controller: 'FeaturedDetailCtrl'
+        controller: 'DetailCtrl'
       }
     }
   })
@@ -63,17 +63,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/list',
       views: {
         'tab-list': {
-          templateUrl: 'templates/tab-chats.html',
+          templateUrl: 'templates/list/list.html',
           controller: 'ListCtrl'
         }
       }
     })
     .state('tab.list-detail', {
-      url: '/list/:id',
+      url: '/apartments/list/:id',
       views: {
         'tab-list': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+          templateUrl: 'templates/list/detail.html',
+          controller: 'DetailCtrl'
         }
       }
     })
