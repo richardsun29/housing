@@ -21,7 +21,15 @@ angular.module('starter.services', [])
 
   apt.get = function() { return getApts() };
   apt.getId = function(id) {
-    return apartments[id] || {};
+    var deferred = $q.defer();
+    if (Object.keys(apartments).length == 0) {
+      getApts().then(function() {
+        deferred.resolve(apartments[id]);
+      });
+    } else {
+      deferred.resolve(apartments[id]);
+    }
+    return deferred.promise;
   };
   return apt;
 })

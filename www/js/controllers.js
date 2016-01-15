@@ -15,8 +15,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('FeaturedDetailCtrl', function($scope, $stateParams, Apartments) {
-  $scope.apt = Apartments.getId($stateParams.id);
-  console.log($scope.apt);
+  Apartments.getId($stateParams.id).then(function(apt) {
+    $scope.apt = apt;
+    console.log($scope.apt);
+  });
 })
 
 .controller('ListCtrl', function($scope, Chats) {
