@@ -1,9 +1,14 @@
 angular.module('starter.controllers', [])
 
-.controller('FeaturedCtrl', function() {})
+.controller('FeaturedCtrl', function($scope, Apartments) {
+  Apartments.getFeatured().then(function(response) {
+    $scope.apts = response;
+    console.log($scope.apts);
+  });
+})
 
-.controller('ListCtrl', function($scope, $state, Apartments) {
-  Apartments.get().then(function(response) {
+.controller('ListCtrl', function($scope, Apartments) {
+  Apartments.getMain().then(function(response) {
     $scope.apts = response.filter(function(apt) {
       return apt.monthly_rent_avg != '0.00';
     });

@@ -1,17 +1,21 @@
 angular.module('starter.services', [])
 
 .factory('Apartments', function($http, $q) {
+  var endpoint = 'http://dev.bruinmobile.com/housing/getAptData.php';
   var apt = {};
 
   var apartments = {};
+  var featured = [];
 
-  var getApts = function() {
+  var fetch = function() {
     var deferred = $q.defer();
-    $http.get('http://dev.bruinmobile.com/housing/getAptData.php').then(function(response) {
+    $http.get(endpoint).then(function(response) {
       var data = {};
       response.data.main_apt_data.forEach(function(apt) {
         apartments[apt.id] = apt;
       });
+      featured = response.data.featured_apt_data;
+
       deferred.resolve(response.data.main_apt_data);
     }, function(error) {
       deferred.reject(error);
@@ -19,11 +23,26 @@ angular.module('starter.services', [])
     return deferred.promise;
   };
 
-  apt.get = function() { return getApts() };
+  apt.getMain = function() {
+    return fetch();
+  };
+
+  apt.getFeatured = function() {
+    var deferred = $q.defer();
+    if (Object.keys(apartments).length == 0) {
+      fetch().then(function() {
+        deferred.resolve(featured);
+      });
+    } else {
+      deferred.resolve(featured);
+    }
+    return deferred.promise;
+  };
+
   apt.getId = function(id) {
     var deferred = $q.defer();
     if (Object.keys(apartments).length == 0) {
-      getApts().then(function() {
+      fetch().then(function() {
         deferred.resolve(apartments[id]);
       });
     } else {
@@ -31,6 +50,9 @@ angular.module('starter.services', [])
     }
     return deferred.promise;
   };
+
+
+
   return apt;
 })
 
