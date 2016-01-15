@@ -50,7 +50,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
   .state('tab.featured-detail', {
-    url: '/featured/:id',
+    url: '/apartment/:id',
     views: {
       'tab-featured': {
         templateUrl: 'templates/featured/detail.html',
