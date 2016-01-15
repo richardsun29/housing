@@ -22,5 +22,10 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ss://git@github.com/richardsun29/housing.git"
+  }
 }

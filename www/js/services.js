@@ -1,5 +1,30 @@
 angular.module('starter.services', [])
 
+.factory('Apartments', function($http, $q) {
+  var apt = {};
+
+  var apartments = {};
+
+  var getApts = function() {
+    var deferred = $q.defer();
+    $http.get('http://dev.bruinmobile.com/housing/getAptData.php').then(function(response) {
+      var data = {};
+      response.data.forEach(function(apt) {
+        apartments[apt.id] = apt;
+      });
+      //deferred.resolve(data);
+      deferred.resolve(response.data);
+    }, function(error) {
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  };
+
+  apt.get = function() { return getApts() };
+  apt.getId = function(id) { return apartments[id] };
+  return apt;
+})
+
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
