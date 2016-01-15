@@ -9,11 +9,10 @@ angular.module('starter.services', [])
     var deferred = $q.defer();
     $http.get('http://dev.bruinmobile.com/housing/getAptData.php').then(function(response) {
       var data = {};
-      response.data.forEach(function(apt) {
+      response.data.main_apt_data.forEach(function(apt) {
         apartments[apt.id] = apt;
       });
-      //deferred.resolve(data);
-      deferred.resolve(response.data);
+      deferred.resolve(response.data.main_apt_data);
     }, function(error) {
       deferred.reject(error);
     });

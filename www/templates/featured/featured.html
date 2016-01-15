@@ -4,7 +4,7 @@
       <ion-item class="item item-thumbnail-left" ng-repeat="apt in apts" href="#/tab/featured/{{apt.id}}">
         <img ng-src="http://lorempixel.com/80/80/city/{{$index%11}}">
         <h2>{{apt.address}}</h2>
-        <p>Rent: ${{apt.monthly_rent_avg}}</p>
+        <p>Rent: {{apt.monthly_rent_avg | currency}}</p>
       </ion-item>
 
     </div>
