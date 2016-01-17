@@ -21,3 +21,18 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.has-header {
+  position: relative;
+}
+
+.featured-slide {
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  .overlay {
+    background-color: rgba(0, 0, 0, .7);
+    h2, p {
+      color: #ccc;
+    }
+  }
+}
