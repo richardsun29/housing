@@ -53,7 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/apartments/featured/:id',
     views: {
       'tab-featured': {
-        templateUrl: 'templates/featured/detail.html',
+        templateUrl: 'templates/list/detail.html',
         controller: 'DetailCtrl'
       }
     }

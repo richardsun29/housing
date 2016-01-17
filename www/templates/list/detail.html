@@ -3,6 +3,11 @@
     <ion-item>
       <h2>{{apt.address}}</h2>
       <img class="full-image" src="http://lorempixel.com/400/400/city">
+
+      <h2>Details</h2>
+      <hr>
+      <div><b>Monthly Rent:</b> {{apt.monthly_rent_avg | currency}}</div>
+      <div><b>Total Views:</b> {{apt.number_of_views}}</div>
     </ion-item>
   </ion-content>
 </ion-view>
