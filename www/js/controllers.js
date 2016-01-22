@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('FavoritesCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };

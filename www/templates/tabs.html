@@ -5,19 +5,19 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
-  <!-- Dashboard Tab -->
-  <ion-tab title="Featured" icon-off="ion-ios-star-outline" icon-on="ion-ios-star" href="#/tab/featured">
+  <ion-tab title="Featured" href="#/tab/featured"
+    icon-off="ion-stats-bars" icon-on="ion-stats-bars">
     <ion-nav-view name="tab-featured"></ion-nav-view>
   </ion-tab>
 
-  <!-- Chats Tab -->
-  <ion-tab title="Apartments" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/list">
+  <ion-tab title="Apartments" href="#/tab/list"
+    icon-off="ion-ios-home-outline" icon-on="ion-ios-home">
     <ion-nav-view name="tab-list"></ion-nav-view>
   </ion-tab>
 
-  <!-- Account Tab -->
-  <ion-tab title="Account" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/account">
-    <ion-nav-view name="tab-account"></ion-nav-view>
+  <ion-tab title="Account" href="#/tab/favorites"
+    icon-off="ion-ios-star-outline" icon-on="ion-ios-star">
+    <ion-nav-view name="tab-favorites"></ion-nav-view>
   </ion-tab>
 
 
