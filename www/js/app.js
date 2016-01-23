@@ -45,7 +45,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/featured',
     views: {
       'tab-featured': {
-        templateUrl: 'templates/featured/featured.html',
+        templateUrl: 'templates/featured.html',
         controller: 'FeaturedCtrl'
       }
     }
@@ -54,7 +54,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/apartments/featured/:id',
     views: {
       'tab-featured': {
-        templateUrl: 'templates/list/detail.html',
+        templateUrl: 'templates/detail.html',
         controller: 'DetailCtrl'
       }
     }
@@ -64,7 +64,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/list',
       views: {
         'tab-list': {
-          templateUrl: 'templates/list/list.html',
+          templateUrl: 'templates/list.html',
           controller: 'ListCtrl'
         }
       }
@@ -73,7 +73,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/apartments/list/:id',
       views: {
         'tab-list': {
-          templateUrl: 'templates/list/detail.html',
+          templateUrl: 'templates/detail.html',
           controller: 'DetailCtrl'
         }
       }
