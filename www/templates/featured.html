@@ -3,7 +3,6 @@
     <ion-slide-page ng-repeat="apt in apts" class="featured-slide"
       style="background-image:url(http://lorempixel.com/400/400/city/{{$index%11}})"
       ng-click="goto('tab.featured-detail', {id: apt.id})">
-      <!--href="#/tab/apartments/featured/{{apt.id}}">-->
       <div class="overlay">
         <h2>{{apt.address}}</h2>
         <p>Rent: {{apt.monthly_rent_avg | currency}}</p>
