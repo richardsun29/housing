@@ -1,5 +1,11 @@
 angular.module('starter.controllers', [])
 
+.controller('TabsCtrl', function($state, $scope) {
+  $scope.goto = function(state, params) {
+    $state.go(state, params);
+  };
+})
+
 .controller('FeaturedCtrl', function($scope, Apartments) {
   Apartments.getFeatured().then(function(response) {
     $scope.apts = response;

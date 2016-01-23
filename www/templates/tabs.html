@@ -5,17 +5,17 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
-  <ion-tab title="Featured" href="#/tab/featured"
+  <ion-tab title="Featured" ng-click="goto('tab.featured')"
     icon-off="ion-stats-bars" icon-on="ion-stats-bars">
     <ion-nav-view name="tab-featured"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab title="Apartments" href="#/tab/list"
+  <ion-tab title="Apartments" ng-click="goto('tab.list')"
     icon-off="ion-ios-home-outline" icon-on="ion-ios-home">
     <ion-nav-view name="tab-list"></ion-nav-view>
   </ion-tab>
 
-  <ion-tab title="Account" href="#/tab/favorites"
+  <ion-tab title="Account" ng-click="goto('tab.favorites')"
     icon-off="ion-ios-star-outline" icon-on="ion-ios-star">
     <ion-nav-view name="tab-favorites"></ion-nav-view>
   </ion-tab>
