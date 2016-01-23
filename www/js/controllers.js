@@ -29,8 +29,9 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('FavoritesCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('FavoritesCtrl', function($scope, Apartments) {
+  Apartments.getFeatured().then(function(resp) {
+    $scope.apts = resp;
+    console.log($scope.apts);
+  });
 });

@@ -1,9 +1,14 @@
-<ion-view view-title="Account">
+<ion-view view-title="Favorites">
   <ion-content>
+
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
+      <ion-item class="item item-thumbnail-left" ng-repeat="apt in apts"
+        ng-click="goto('tab.list-detail', {id: apt.id})">
+        <img ng-src="http://lorempixel.com/80/80/city/{{$index%11}}">
+        <h2>{{apt.address}}</h2>
+        <p>Rent: {{apt.monthly_rent_avg | currency}}</p>
+      </ion-item>
     </ion-list>
+
   </ion-content>
 </ion-view>
