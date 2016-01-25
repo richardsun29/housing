@@ -50,8 +50,6 @@ angular.module('starter.services', ['ngStorage'])
     return deferred.promise;
   };
 
-
-
   return {
     getMain: getMain,
     getFeatured: getFeatured,
@@ -59,22 +57,45 @@ angular.module('starter.services', ['ngStorage'])
   }
 })
 
-.factory('Favorites', function($localStorage) {
-  $localStorage.$reset(); // for debugging
-  $localStorage.favorites = $localStorage.favorites || [];
+.factory('Favorites', function($localStorage, $q, Apartments) {
+  //$localStorage.$reset(); // for debugging
+  $localStorage.favorites = $localStorage.favorites || {};
   var favorites = $localStorage.favorites;
+
+  var favoriteApts = [];
+  var favoriteAptsPromise = $q.defer();
+  for (var i in favorites) {
+    Apartments.getId(i).then(function(apt) {
+      favoriteApts.push(apt);
+      if (favoriteApts.length >= Object.keys(favorites).length) {
+        favoriteAptsPromise.resolve();
+      }
+    });
+  }
 
   var isFavorited = function(id) {
     return favorites[id];
   };
 
   var add = function(id) {
-    favorites[id] = true;
+    if (!favorites[id]) {
+      favorites[id] = true;
+      Apartments.getId(id).then(function(apt) {
+        favoriteApts.push(apt);
+      });
+    }
     return true;
   };
 
   var remove = function(id) {
-    delete favorites[id];
+    if (favorites[id]) {
+      delete favorites[id];
+      for (var i in favoriteApts)
+        if (favoriteApts[i].id == id) {
+          favoriteApts.splice(i, 1);
+          break;
+        }
+    }
     return false;
   };
 
@@ -85,8 +106,12 @@ angular.module('starter.services', ['ngStorage'])
       return add(id);
   };
 
-  var getAll = function(id) {
-    return favorites;
+  var getFavoriteApts = function(id) {
+    var deferred = $q.defer();
+    favoriteAptsPromise.promise.then(function() {
+      deferred.resolve(favoriteApts);
+    });
+    return deferred.promise;
   };
 
   return {
@@ -94,6 +119,6 @@ angular.module('starter.services', ['ngStorage'])
     remove: remove,
     toggle: toggle,
     isFavorited: isFavorited,
-    getAll: getAll
+    get: getFavoriteApts
   };
 });

@@ -21,7 +21,6 @@ angular.module('starter.controllers', [])
     console.log($scope.apts);
   });
 })
-
 .controller('DetailCtrl', function($scope, $stateParams, Apartments,
       Favorites) {
 
@@ -39,8 +38,8 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('FavoritesCtrl', function($scope, Apartments) {
-  Apartments.getFeatured().then(function(resp) {
+.controller('FavoritesCtrl', function($scope, Favorites) {
+  Favorites.get().then(function(resp) {
     $scope.apts = resp;
     console.log($scope.apts);
   });
