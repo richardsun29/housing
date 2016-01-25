@@ -64,21 +64,36 @@ angular.module('starter.services', ['ngStorage'])
   $localStorage.favorites = $localStorage.favorites || [];
   var favorites = $localStorage.favorites;
 
+  var isFavorited = function(id) {
+    return favorites[id];
+  };
+
   var add = function(id) {
     favorites[id] = true;
+    return true;
   };
 
   var remove = function(id) {
     delete favorites[id];
+    return false;
   };
 
-  var isFavorited = function(id) {
-    return favorites[id];
+  var toggle = function(id) {
+    if (isFavorited(id))
+      return remove(id);
+    else
+      return add(id);
+  };
+
+  var getAll = function(id) {
+    return favorites;
   };
 
   return {
     add: add,
     remove: remove,
-    isFavorited: isFavorited
+    toggle: toggle,
+    isFavorited: isFavorited,
+    getAll: getAll
   };
 });

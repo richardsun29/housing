@@ -26,7 +26,12 @@ angular.module('starter.controllers', [])
       Favorites) {
 
   var id = $stateParams.id;
+
   $scope.favorited = Favorites.isFavorited(id);
+
+  $scope.toggleFavorite = function() {
+    $scope.favorited = Favorites.toggle(id);
+  }
 
   Apartments.getId(id).then(function(apt) {
     $scope.apt = apt;
