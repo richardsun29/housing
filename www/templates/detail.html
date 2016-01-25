@@ -1,9 +1,12 @@
 <ion-view>
   <ion-nav-title>{{apt.address}}</ion-nav-title>
+
   <ion-nav-buttons side="secondary">
     <button class="button button-icon icon"
-      ng-class="favorited ? 'ion-ios-star' : 'ion-ios-star-outline'"></button>
+      ng-class="favorited ? 'ion-ios-star' : 'ion-ios-star-outline'">
+    </button>
   </ion-nav-buttons>
+
   <ion-content>
     <ion-item>
       <h2>{{apt.address}}</h2>
@@ -15,4 +18,5 @@
       <div><b>Total Views:</b> {{apt.number_of_views}}</div>
     </ion-item>
   </ion-content>
+
 </ion-view>

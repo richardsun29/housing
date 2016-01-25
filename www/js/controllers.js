@@ -22,9 +22,13 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('DetailCtrl', function($scope, $stateParams, Apartments) {
-  $scope.favorited = true;
-  Apartments.getId($stateParams.id).then(function(apt) {
+.controller('DetailCtrl', function($scope, $stateParams, Apartments,
+      Favorites) {
+
+  var id = $stateParams.id;
+  $scope.favorited = Favorites.isFavorited(id);
+
+  Apartments.getId(id).then(function(apt) {
     $scope.apt = apt;
     console.log($scope.apt);
   });
