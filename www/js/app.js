@@ -87,7 +87,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'FavoritesCtrl'
       }
     }
-  });
+  })
+  .state('tab.favorites-detail', {
+    url: '/apartments/favorites/:id',
+    views: {
+      'tab-favorites': {
+        templateUrl: 'templates/detail.html',
+        controller: 'DetailCtrl'
+      }
+    }
+  })
+  ;
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/featured');
