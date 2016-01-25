@@ -23,6 +23,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('DetailCtrl', function($scope, $stateParams, Apartments) {
+  $scope.favorited = true;
   Apartments.getId($stateParams.id).then(function(apt) {
     $scope.apt = apt;
     console.log($scope.apt);
