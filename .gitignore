@@ -7,3 +7,5 @@ plugins/
 www/lib/
 *.css
 *.swp
+
+node.d.ts
