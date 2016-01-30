@@ -1,3 +1,6 @@
+<style>
+.angular-google-map-container { height: 400px; }
+</style>
 <ion-view>
   <ion-nav-title>{{apt.address}}</ion-nav-title>
 
@@ -10,6 +13,7 @@
   </ion-nav-buttons>
 
   <ion-content>
+<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
     <ion-item>
       <img class="full-image" src="http://lorempixel.com/400/400/city">
 

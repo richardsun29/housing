@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['uiGmapgoogle-maps'])
 
 .controller('TabsCtrl', function($state, $scope) {
   $scope.goto = function(state, params) {
@@ -23,6 +23,7 @@ angular.module('starter.controllers', [])
 })
 .controller('DetailCtrl', function($scope, $stateParams, Apartments,
       Favorites) {
+  $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 
   var id = $stateParams.id;
 
