@@ -5,7 +5,7 @@ import * as fs from 'fs';
 
 var url: string = 'http://dev.bruinmobile.com/housing/getAptData.php';
 
-var req: http.ClientRequest = http.get(url, (res) => {
+http.get(url, (res) => {
   res.setEncoding('utf8');
 
   var body: string = '';
@@ -15,11 +15,9 @@ var req: http.ClientRequest = http.get(url, (res) => {
   res.on('end', () => {
     parse_apts(body);
   });
-});
-req.on('error', (e) => {
+}).on('error', (e) => {
   console.log(`problem with request: ${e.message}`);
-})
-req.end();
+});
 
 interface Apartment {
   id: string;
