@@ -10,14 +10,16 @@ all: $(d_ts) $(compiled)
 $(d_ts):
 	wget "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/node/node.d.ts"
 
-$(compiled): $(sources)
+%.js: %.ts
 	$(TSC) $(ARGS) $^
 
-run-map: dist-matrix.ts
+run-apt: apt-list.js
+	node apt-list.js
+
+run-map: dist-matrix.js apartments.json
 	node dist-matrix.js
 
-run-apt: apt-list.ts
-	node apt-list.js
+apartments.json: run-apt
 
 clean:
 	rm -rf *.js
