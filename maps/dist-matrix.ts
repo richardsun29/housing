@@ -17,9 +17,6 @@ apartments = apartments.map(apt => {
   return { id: apt.id, address: `${apt.address} ${la}` };
 });
 
-
-console.log(apartments.length);
-
 console.log('id\tdistance(m)\ttime(s)');
 
 
@@ -32,6 +29,9 @@ var destinations: string = 'Dickson Court South, Los Angeles, CA 90095';
 var index: number = 0;
 var nth_request = 0;
 
+var data: string[] = [];
+var http_index: number = 0;
+
 while (index < apartments.length) {
   // URL length is restricted to ~2000 characters, after encoding
   var origins: string = '';
@@ -39,17 +39,16 @@ while (index < apartments.length) {
     origins += apartments[index].address + '|';
     index++;
   }
-
   var options: string = querystring.stringify({
     origins: origins,
     destinations: destinations,
     key: api_key,
     mode: 'walking',
   });
-
+  data.push(options);
 
   setTimeout(() => {
-    https.get(`${endpt}?${options}`, res => {
+    https.get(`${endpt}?${data[http_index++]}`, res => {
       var body: string = '';
       res.on('data', chunk => {
         body += chunk;
@@ -65,7 +64,6 @@ while (index < apartments.length) {
 var total_index = 0;
 var print_distance = function(body: string): void {
   var rows: any[] = JSON.parse(body).rows;
-
   for (let i = 0; i < rows.length; i++) {
     var id: string = apartments[total_index].id;
     var distance: number = rows[i].elements[0].distance.value;
