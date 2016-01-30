@@ -34,6 +34,10 @@ angular.module('starter.controllers', [])
 
   Apartments.getId(id).then(function(apt) {
     $scope.apt = apt;
+
+    var endpoint = 'http://maps.apple.com/?address='
+    var addr = (apt.address + ' Los Angeles').replace(/ /g, '+');
+    $scope.apt.maps_url = endpoint + addr;
     console.log($scope.apt);
   });
 })
