@@ -16,7 +16,7 @@ $(d_ts):
 run-apt: apt-list.js
 	node apt-list.js
 
-run-map: dist-matrix.js apartments.json
+run-map: dist-matrix.js
 	node dist-matrix.js
 
 apartments.json: run-apt
