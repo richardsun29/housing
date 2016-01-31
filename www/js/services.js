@@ -121,4 +121,44 @@ angular.module('starter.services', ['ngStorage'])
     isFavorited: isFavorited,
     get: getFavoriteApts
   };
-});
+})
+
+.factory('Maps', function($http, $q, Apartments) {
+  var zip = '90024'; // Westwood
+
+  var encodeAddress = function(address) {
+    return address.replace(/ /g, '+');
+  };
+
+  /* Address hyperlink */
+  var appleMapsUrl = (function() {
+    var endpoint = 'http://maps.apple.com/?address=';
+    return function(address) {
+      return endpoint + encodeAddress(address) + '+' + zip;
+    };
+  })();
+
+  var addressToCoords = (function() {
+    var endpoint = 'https://maps.googleapis.com/maps/api/geocode/json';
+    var key = 'AIzaSyCxxHY4QFpofM-K0RoQZVn93dOCm74Vs0o';
+    var url = endpoint+'?key='+key+'&components=postal_code:'+zip+'&address=';
+    return function(address) {
+      var deferred = $q.defer();
+      $http.get(url + encodeAddress(address)).then(function(response) {
+        var coords = response.data.results[0].geometry.location;
+        deferred.resolve({
+          latitude: coords.lat,
+          longitude: coords.lng
+        });
+      });
+
+      return deferred.promise;
+    };
+  })();
+
+  return {
+    url: appleMapsUrl,
+    coords: addressToCoords
+  };
+})
+;

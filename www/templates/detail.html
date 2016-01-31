@@ -13,14 +13,21 @@
   </ion-nav-buttons>
 
   <ion-content>
-<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
     <ion-item>
       <img class="full-image" src="http://lorempixel.com/400/400/city">
 
-      <div><b>Address: </b><a href="{{apt.maps_url}}">{{apt.address}}</a></div>
+      <div><b>Address: </b><a href="{{apt.mapsUrl}}">{{apt.address}}</a></div>
       <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | currency}}</div>
       <div><b>Total Views: </b>{{apt.number_of_views}}</div>
     </ion-item>
+
+    <ion-item>
+      <ui-gmap-google-map center="map.center" zoom="map.zoom">
+        <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'">
+        </ui-gmap-markers>
+      </ui-gmap-google-map>
+    </ion-item>
+
   </ion-content>
 
 </ion-view>

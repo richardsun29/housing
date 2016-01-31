@@ -22,8 +22,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
   });
 })
 .controller('DetailCtrl', function($scope, $stateParams, Apartments,
-      Favorites) {
-  $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+      Favorites, Maps) {
 
   var id = $stateParams.id;
 
@@ -36,9 +35,21 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
   Apartments.getId(id).then(function(apt) {
     $scope.apt = apt;
 
-    var endpoint = 'http://maps.apple.com/?address='
-    var addr = (apt.address + ' Los Angeles').replace(/ /g, '+');
-    $scope.apt.maps_url = endpoint + addr;
+    $scope.apt.mapsUrl = Maps.url(apt.address);
+
+    Maps.coords(apt.address).then(function(coords) {
+      var markers = [{
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+        id: 0
+      }];
+      $scope.map = {
+        center: coords,
+        zoom: 10,
+        markers: markers
+      };
+    });
+
     console.log($scope.apt);
   });
 })
