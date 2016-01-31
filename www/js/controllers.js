@@ -35,7 +35,7 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
   Apartments.getId(id).then(function(apt) {
     $scope.apt = apt;
 
-    $scope.apt.mapsUrl = Maps.url(apt.address);
+    $scope.mapsUrl = Maps.url(apt.address);
 
     Maps.coords(apt.address).then(function(coords) {
       var markers = [{

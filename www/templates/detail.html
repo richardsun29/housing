@@ -1,5 +1,4 @@
 <style>
-.angular-google-map-container { height: 400px; }
 </style>
 <ion-view>
   <ion-nav-title>{{apt.address}}</ion-nav-title>
@@ -16,7 +15,7 @@
     <ion-item>
       <img class="full-image" src="http://lorempixel.com/400/400/city">
 
-      <div><b>Address: </b><a href="{{apt.mapsUrl}}">{{apt.address}}</a></div>
+      <div><b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a></div>
       <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | currency}}</div>
       <div><b>Total Views: </b>{{apt.number_of_views}}</div>
     </ion-item>
@@ -26,6 +25,9 @@
         <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'">
         </ui-gmap-markers>
       </ui-gmap-google-map>
+      <a href="{{mapsUrl}}">
+        <button class="button button-block button-positive">Open in Maps</button>
+      </a>
     </ion-item>
 
   </ion-content>
