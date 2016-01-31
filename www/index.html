@@ -21,6 +21,25 @@
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+
+    <!-- Link Handling -->
+    <script>
+    document.onclick = function (e) {
+        var counter = 0;
+        e = e ||  window.event;
+        var element = e.target || e.srcElement;
+        while (element !== undefined && counter++ < 3) {
+          if (element.tagName == 'A' && element.href.indexOf('/index.html#/') == -1) {
+            if (ionic.Platform.isIOS() && ionic.Platform.version() >= 9)
+              window.open(element.href.replace(/www\.(facebook|youtube)/, 'm.$1'), '_system');
+            else
+              window.open(element.href, '_system');
+            return false;
+          }
+          element = element.parentNode;
+        }
+    };
+    </script>
   </head>
 
   <body ng-app="starter">
