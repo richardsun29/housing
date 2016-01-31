@@ -45,7 +45,6 @@ angular.module('starter.controllers', ['uiGmapgoogle-maps'])
       }];
       $scope.map = {
         center: coords,
-        zoom: 10,
         markers: markers
       };
     });
