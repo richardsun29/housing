@@ -21,9 +21,16 @@ $ionicons-font-path: "../lib/ionic/release/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.item-thumbnail-left {
+  img {
+    object-fit: cover;
+  }
+}
+
 .featured-slide {
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
 
   .overlay {
     position: relative;
