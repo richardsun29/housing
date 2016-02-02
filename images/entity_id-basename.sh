@@ -1,13 +1,11 @@
 #!/bin/bash
 
-grep building_fronts bruinwalk16.sql |
-awk '
-BEGIN { 
-  FS="\t"
-  OFS="\t"
-}
+path='apartments/building_fronts/'
 
-{
-  print $2, $3
-}
-'
+echo '{'
+
+  grep "$path" bruinwalk16.sql |
+  awk -F '\t' '{ printf "\t%s: \"%s\",\n", $2, $7 }' |
+  sed "s;$path;;"
+
+echo '}'
