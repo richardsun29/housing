@@ -1,7 +1,7 @@
 <ion-view view-title="Featured Listings">
   <ion-slides class="has-header">
     <ion-slide-page ng-repeat="apt in apts" class="featured-slide"
-      style="background-image:url(http://lorempixel.com/400/400/city/{{$index%11}})"
+      style="background-image:url({{apt.image_path}})"
       ng-click="goto('tab.featured-detail', {id: apt.id})">
       <div class="overlay">
         <h2>{{apt.address}}</h2>
