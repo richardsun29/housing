@@ -253,7 +253,10 @@ angular.module('starter.services', ['ngStorage'])
   var url = 'images/'
   return {
     get: function(entity_id) {
-      return url + images[entity_id];
+      if (images[entity_id])
+        return url + images[entity_id];
+      else
+        return undefined;
     }
   };
 })
