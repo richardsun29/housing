@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'controllers', 'services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -95,4 +95,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/featured');
 
-});
+})
+
+.directive('listSearch', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      filter: '=filter'
+    },
+    templateUrl: 'templates/list-search.html'
+  };
+})
+
+;

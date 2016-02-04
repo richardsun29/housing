@@ -1,4 +1,4 @@
-angular.module('starter.services', ['ngStorage'])
+angular.module('services', ['ngStorage'])
 
 .factory('Apartments', function($http, $q, Images) {
   var endpoint = 'http://dev.bruinmobile.com/housing/getAptData.php';
