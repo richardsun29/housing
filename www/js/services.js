@@ -249,8 +249,8 @@ angular.module('starter.services', ['ngStorage'])
     6198: "CIMG4371.JPG", 6199: "CIMG4547.JPG"
   };
 
-  //var url = 'http://dev.bruinmobile.com/housing/images/';
-  var url = 'images/'
+  var url = 'http://dev.bruinmobile.com/housing/images/';
+//   var url = 'images/'
   return {
     get: function(entity_id) {
       if (images[entity_id])

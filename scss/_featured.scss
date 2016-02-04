@@ -1,0 +1,27 @@
+.featured {
+    .slide {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        
+        .overlay-ios {
+            bottom: 50px;
+        }
+
+        .overlay {
+            position: absolute;
+            width: 100%;
+            bottom: 50px;
+            padding-top: 15px;
+            background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8));
+            // background-color: rgba(0, 0, 0, 0.8);
+            
+            .inner {
+                padding: 5%;      
+                h2, p {
+                    color: #FFF;
+                }
+            }
+        }
+    }
+}
