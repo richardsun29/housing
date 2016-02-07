@@ -3,7 +3,8 @@ angular.module('services', ['ngStorage'])
 .factory('Apartments', function($http, $q, Images) {
   var endpoint = 'http://dev.bruinmobile.com/housing/getAptData.php';
 
-  var apartments = {};
+  var apts_map = {};
+  var apts_arr = [];
   var featured = [];
 
   var fetch = function() {
@@ -20,10 +21,11 @@ angular.module('services', ['ngStorage'])
       }
 
       response.data.main_apt_data.forEach(function(apt) {
-        apartments[apt.id] = apt;
+        apts_map[apt.id] = apt;
       });
       featured = response.data.featured_apt_data;
 
+      apts_arr = response.data.main_apt_data;
       deferred.resolve(response.data.main_apt_data);
     }, function(error) {
       deferred.reject(error);
@@ -37,7 +39,7 @@ angular.module('services', ['ngStorage'])
 
   var getFeatured = function() {
     var deferred = $q.defer();
-    if (Object.keys(apartments).length == 0) {
+    if (Object.keys(apts_map).length == 0) {
       fetch().then(function() {
         deferred.resolve(featured);
       });
@@ -49,20 +51,36 @@ angular.module('services', ['ngStorage'])
 
   var getId = function(id) {
     var deferred = $q.defer();
-    if (Object.keys(apartments).length == 0) {
+    if (Object.keys(apts_map).length == 0) {
       fetch().then(function() {
-        deferred.resolve(apartments[id]);
+        deferred.resolve(apts_map[id]);
       });
     } else {
-      deferred.resolve(apartments[id]);
+      deferred.resolve(apts_map[id]);
     }
     return deferred.promise;
   };
+
+  var getPage = function(page) {
+    var perPage = 10;
+    var start = page * perPage;
+    var deferred = $q.defer();
+
+    if (Object.keys(apts_map).length == 0) {
+      fetch().then(function() {
+        deferred.resolve(apts_arr.slice(start, start + perPage));
+      });
+    } else {
+      deferred.resolve(apts_arr.slice(start, start + perPage));
+    }
+    return deferred.promise;
+  }
 
   return {
     getMain: getMain,
     getFeatured: getFeatured,
     getId: getId,
+    getPage: getPage,
     getImage: Images.get
   }
 })

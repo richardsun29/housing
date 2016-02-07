@@ -14,12 +14,24 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
 })
 
 .controller('ListCtrl', function($scope, $ionicPopup, Apartments) {
-  Apartments.getMain().then(function(response) {
-    $scope.apts = response.filter(function(apt) {
-      return apt.monthly_rent_avg != '0.00';
+
+  $scope.apts = [];
+  var page = 0;
+  $scope.morePages = true;
+	$scope.loadMore = function() {
+    Apartments.getPage(page++).then(function(apts) {
+      if (apts.length == 0) {
+        $scope.morePages = false;
+        return;
+      }
+
+      apts.forEach(function(apt) {
+        $scope.apts.push(apt);
+      });
+
+      $scope.$broadcast('scroll.infiniteScrollComplete');
     });
-    console.log($scope.apts);
-  });
+	};
 
   $scope.filter = {
     rent: 2000,
@@ -31,28 +43,25 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
 
 
   $scope.search = function() {
-
-    // An elaborate, custom popup
     var myPopup = $ionicPopup.show({
       templateUrl: 'templates/list-search.html',
       title: 'Search',
       scope: $scope,
       buttons: [
-      {
-        text: 'Close'
-      },
-      {
-        text: '<b>Search</b>',
-        type: 'button-positive',
-        onTap: function(e) {
-          if (!$scope.data.wifi) {
-            //don't allow the user to close unless he enters wifi password
-            e.preventDefault();
-          } else {
-            return $scope.data.wifi;
+        {
+          text: 'Close'
+        },
+        {
+          text: '<b>Search</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.data.wifi) {
+              e.preventDefault();
+            } else {
+              return $scope.data.wifi;
+            }
           }
         }
-      }
       ]
     });
   };
