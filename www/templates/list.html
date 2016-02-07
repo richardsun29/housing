@@ -12,7 +12,7 @@
     <ion-list>
       <ion-item class="item item-thumbnail-left" ng-repeat="apt in apts"
         ng-click="goto('tab.list-detail', {id: apt.id})">
-        <img ng-src="{{apt.image_path}}">
+        <img ng-src="{{apt.thumbnail}}">
         <h2>{{apt.address}}</h2>
         <p>Rent: {{apt.monthly_rent_avg | currency}}</p>
       </ion-item>

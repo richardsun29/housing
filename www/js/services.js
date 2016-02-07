@@ -15,7 +15,8 @@ angular.module('services', ['ngStorage'])
       // TEMPORARY: insert image links
       for (var i in response.data) {
         response.data[i] = response.data[i].map(function(apt) {
-          apt.image_path = Images.get(apt.entity_id);
+          apt.image_path = Images.full(apt.entity_id);
+          apt.thumbnail = Images.thumb(apt.entity_id);
           return apt;
         });
       }
@@ -265,13 +266,20 @@ angular.module('services', ['ngStorage'])
   };
 
   var url = 'http://dev.bruinmobile.com/housing/images/';
-//   var url = 'images/'
+
+  var get = function(subdirectory, entity_id) {
+    if (images[entity_id])
+      return url + subdirectory + images[entity_id];
+    else
+      return undefined;
+  };
+
   return {
-    get: function(entity_id) {
-      if (images[entity_id])
-        return url + images[entity_id];
-      else
-        return undefined;
+    full: function(entity_id) {
+      return get('full/', entity_id);
+    },
+    thumb: function(entity_id) {
+      return get('thumb/', entity_id);
     }
   };
 })
