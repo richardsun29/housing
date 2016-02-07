@@ -33,31 +33,33 @@ angular.module('services', ['ngStorage'])
     return deferred.promise;
   };
 
+  var waitForFetch = function(deferred, callback) {
+    if (apts_arr.length == 0) {
+      fetch().then(function() {
+        deferred.resolve(callback());
+      });
+    } else {
+      deferred.resolve(callback());
+    }
+  };
+
   var getMain = function() {
     return fetch();
   };
 
   var getFeatured = function() {
     var deferred = $q.defer();
-    if (Object.keys(apts_map).length == 0) {
-      fetch().then(function() {
-        deferred.resolve(featured);
-      });
-    } else {
-      deferred.resolve(featured);
-    }
+    waitForFetch(deferred, function() {
+      return featured;
+    });
     return deferred.promise;
   };
 
   var getId = function(id) {
     var deferred = $q.defer();
-    if (Object.keys(apts_map).length == 0) {
-      fetch().then(function() {
-        deferred.resolve(apts_map[id]);
-      });
-    } else {
-      deferred.resolve(apts_map[id]);
-    }
+    waitForFetch(deferred, function() {
+      return apts_map[id];
+    });
     return deferred.promise;
   };
 
@@ -66,13 +68,9 @@ angular.module('services', ['ngStorage'])
     var start = page * perPage;
     var deferred = $q.defer();
 
-    if (Object.keys(apts_map).length == 0) {
-      fetch().then(function() {
-        deferred.resolve(apts_arr.slice(start, start + perPage));
-      });
-    } else {
-      deferred.resolve(apts_arr.slice(start, start + perPage));
-    }
+    waitForFetch(deferred, function() {
+      return apts_arr.slice(start, start + perPage);
+    });
     return deferred.promise;
   }
 
