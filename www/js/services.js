@@ -75,11 +75,10 @@ angular.module('services', ['ngStorage'])
   }
 
   return {
-    getMain: getMain,
+    getAll: getMain,
     getFeatured: getFeatured,
     getId: getId,
     getPage: getPage,
-    getImage: Images.get
   }
 })
 
