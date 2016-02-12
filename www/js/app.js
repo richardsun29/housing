@@ -90,6 +90,17 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
       }
     }
   })
+
+  .state('tab.map', {
+    url: '/map',
+    views: {
+      'tab-map': {
+        templateUrl: 'templates/full-map.html',
+        controller: 'MapCtrl'
+      }
+    }
+  })
+
   ;
 
   // if none of the above states are matched, use this as the fallback

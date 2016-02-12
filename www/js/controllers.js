@@ -105,4 +105,29 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     $scope.apts = resp;
     console.log($scope.apts);
   });
-});
+})
+
+.controller('MapCtrl', function($scope, Apartments, Maps) {
+  Apartments.getAll().then(function(apts) {
+    $scope.apts = apts;
+
+    $scope.map = {
+      center: { latitude: 34.0709321, longitude: -118.4447689 }, // bruin plaza
+      markers: []
+    };
+
+    var i = 0;
+    //for (var i in apts) {
+      Maps.coords(apts[i].address).then(function(coords) {
+        $scope.map.markers.push({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          id: i
+        });
+      });
+    //}
+
+  });
+})
+
+;
