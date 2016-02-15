@@ -11,7 +11,7 @@
 
   <ion-content>
     <ion-item>
-      <img class="full-image" src="{{apt.image_path}}">
+      <img class="full-image" ng-src="{{apt.image_path}}">
 
       <div><b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a></div>
       <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | currency}}</div>
