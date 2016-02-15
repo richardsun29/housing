@@ -26,3 +26,12 @@ $ionicons-font-path: "../lib/ionic/release/fonts" !default;
 @import "favorites";
 @import "detail";
 @import "maps";
+
+
+.has-header {
+  top: 45px;
+}
+
+.has-footer {
+  bottom: 50px;
+}
