@@ -284,4 +284,20 @@ angular.module('services', ['ngStorage'])
   };
 })
 
+.factory('AptModal', function($ionicModal) {
+  var detailTemplate = 'templates/detail.html';
+
+  var get = function(scope) {
+    return $ionicModal.fromTemplateUrl(detailTemplate, {
+      scope: scope,
+      animation: 'slide-in-up',
+      backdropClickToClose: false
+    });
+  };
+
+  return {
+    get: get
+  };
+})
+
 ;

@@ -13,7 +13,7 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
   });
 })
 
-.controller('ListCtrl', function($scope, $ionicPopup, $ionicModal, Apartments) {
+.controller('ListCtrl', function($scope, $ionicPopup, AptModal, Apartments) {
 
   $scope.apts = [];
   var page = 0;
@@ -66,11 +66,7 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     });
   };
 
-  $ionicModal.fromTemplateUrl('templates/detail.html', {
-    scope: $scope,
-    animation: 'slide-in-up',
-    backdropClickToClose: false
-  }).then(function(modal) {
+  AptModal.get($scope).then(function(modal) {
     $scope.modal = modal;
   });
   $scope.openModal = function(apt) {
