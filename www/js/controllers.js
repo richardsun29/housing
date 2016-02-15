@@ -28,7 +28,6 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
       apts.forEach(function(apt) {
         $scope.apts.push(apt);
       });
-      $scope.apt = apts[0];
 
       $scope.$broadcast('scroll.infiniteScrollComplete');
     });
@@ -73,9 +72,9 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     backdropClickToClose: false
   }).then(function(modal) {
     $scope.modal = modal;
-    $scope.modal.show();
   });
-  $scope.openModal = function() {
+  $scope.openModal = function(apt) {
+    $scope.apt = apt;
     $scope.modal.show();
   };
   $scope.closeModal = function() {
