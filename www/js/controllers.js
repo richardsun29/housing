@@ -13,7 +13,7 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
   });
 })
 
-.controller('ListCtrl', function($scope, $ionicPopup, Apartments) {
+.controller('ListCtrl', function($scope, $ionicPopup, $ionicModal, Apartments) {
 
   $scope.apts = [];
   var page = 0;
@@ -28,6 +28,7 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
       apts.forEach(function(apt) {
         $scope.apts.push(apt);
       });
+      $scope.apt = apts[0];
 
       $scope.$broadcast('scroll.infiniteScrollComplete');
     });
@@ -66,6 +67,23 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     });
   };
 
+  $ionicModal.fromTemplateUrl('templates/detail.html', {
+    scope: $scope,
+    animation: 'slide-in-up',
+    backdropClickToClose: false
+  }).then(function(modal) {
+    $scope.modal = modal;
+    $scope.modal.show();
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
 })
 
 .controller('DetailCtrl', function($scope, $stateParams, Apartments,

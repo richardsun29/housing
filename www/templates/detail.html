@@ -1,33 +1,23 @@
-<ion-view>
-  <ion-nav-title>{{apt.address}}</ion-nav-title>
+<ion-content class="has-header has-footer" has-bouncing="false">
+  <ion-item>
+<button class="button button-icon icon ion-close" ng-click="closeModal()"></button>
+  </ion-item>
+  <ion-item>
+    <img class="full-image" ng-src="{{apt.image_path}}">
 
-  <ion-nav-buttons side="secondary">
-    <button class="button button-icon icon"
-      ng-class="favorited ? 'ion-ios-star' : 'ion-ios-star-outline'"
-      ng-click="toggleFavorite()"
-      >
-    </button>
-  </ion-nav-buttons>
+    <div><b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a></div>
+    <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | currency}}</div>
+    <div><b>Total Views: </b>{{apt.number_of_views}}</div>
+  </ion-item>
 
-  <ion-content>
-    <ion-item>
-      <img class="full-image" ng-src="{{apt.image_path}}">
+  <ion-item>
+    <ui-gmap-google-map center="map.center" zoom="14">
+      <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'">
+      </ui-gmap-markers>
+    </ui-gmap-google-map>
+    <a href="{{mapsUrl}}">
+      <button class="button button-block button-positive">Open in Maps</button>
+    </a>
+  </ion-item>
 
-      <div><b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a></div>
-      <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | currency}}</div>
-      <div><b>Total Views: </b>{{apt.number_of_views}}</div>
-    </ion-item>
-
-    <ion-item>
-      <ui-gmap-google-map center="map.center" zoom="14">
-        <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'">
-        </ui-gmap-markers>
-      </ui-gmap-google-map>
-      <a href="{{mapsUrl}}">
-        <button class="button button-block button-positive">Open in Maps</button>
-      </a>
-    </ion-item>
-
-  </ion-content>
-
-</ion-view>
+</ion-content>
