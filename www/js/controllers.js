@@ -78,6 +78,7 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     $scope.modal.show();
   };
   $scope.closeModal = function() {
+    $scope.apt.image_path = ' ';
     $scope.modal.hide();
   };
   $scope.$on('$destroy', function() {
