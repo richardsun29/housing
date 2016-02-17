@@ -149,7 +149,7 @@ angular.module('services', ['ngStorage'])
   };
 })
 
-.factory('Maps', function($http, $q, Apartments) {
+.factory('Maps', function($http, $q) {
   var zip = '90024'; // Westwood
 
   var encodeAddress = function(address) {

@@ -13,7 +13,7 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
   });
 })
 
-.controller('ListCtrl', function($scope, $ionicPopup, AptModal, Apartments) {
+.controller('ListCtrl', function($scope, $ionicPopup, AptModal, Apartments, Maps, Favorites) {
 
   $scope.apts = [];
   var page = 0;
@@ -66,38 +66,19 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     });
   };
 
+  $scope.toggleFavorite = function() {
+    if ($scope.apt)
+      $scope.favorited = Favorites.toggle($scope.apt.id);
+  };
+
   AptModal.get($scope).then(function(modal) {
     $scope.modal = modal;
   });
+
   $scope.openModal = function(apt) {
-    $scope.apt = apt;
-    $scope.modal.show();
-  };
-  $scope.closeModal = function() {
-    $scope.apt.image_path = ' ';
-    $scope.modal.hide();
-  };
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
-})
-
-.controller('DetailCtrl', function($scope, $stateParams, Apartments,
-      Favorites, Maps) {
-
-  var id = $stateParams.id;
-
-  $scope.favorited = Favorites.isFavorited(id);
-
-  $scope.toggleFavorite = function() {
-    $scope.favorited = Favorites.toggle(id);
-  }
-
-  Apartments.getId(id).then(function(apt) {
     $scope.apt = apt;
 
     $scope.mapsUrl = Maps.url(apt.address);
-
     Maps.coords(apt.address).then(function(coords) {
       var markers = [{
         latitude: coords.latitude,
@@ -110,7 +91,17 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
       };
     });
 
-    console.log($scope.apt);
+    $scope.favorited = Favorites.isFavorited($scope.apt.id);
+
+    $scope.modal.show();
+  };
+
+  $scope.closeModal = function() {
+    $scope.apt.image_path = ' ';
+    $scope.modal.hide();
+  };
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
   });
 })
 
