@@ -74,48 +74,7 @@ function($scope, $ionicPopup, AptModal, Apartments, Maps, Favorites) {
 
 
   /* Modal Detail */
-
-  AptModal.get($scope).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  $scope.openModal = function(apt) {
-    $scope.apt = apt;
-
-    /* maps */
-    $scope.mapsUrl = Maps.url(apt.address);
-    Maps.coords(apt.address).then(function(coords) {
-      var markers = [{
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-        id: 0
-      }];
-      $scope.map = {
-        center: coords,
-        markers: markers
-      };
-    });
-
-    /* favorites */
-    $scope.favorited = Favorites.isFavorited($scope.apt.id);
-
-    $scope.modal.show();
-  };
-
-  /* modal cleanup */
-  $scope.closeModal = function() {
-    $scope.apt = {image_path: ' '}; // prevents previous image from showing
-    $scope.modal.hide();
-  };
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
-
-  /* favorites */
-  $scope.toggleFavorite = function() {
-    if ($scope.apt)
-      $scope.favorited = Favorites.toggle($scope.apt.id);
-  };
+  AptModal.source.call($scope);
 
 }])
 

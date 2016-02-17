@@ -287,7 +287,8 @@ function($http, $q) {
   };
 })
 
-.factory('AptModal', ['$ionicModal', function($ionicModal) {
+.factory('AptModal', ['$ionicModal', 'Maps', 'Favorites',
+function($ionicModal, Maps, Favorites) {
   var detailTemplate = 'templates/detail.html';
 
   var get = function(scope) {
@@ -298,8 +299,65 @@ function($http, $q) {
     });
   };
 
+  /* calling "AptModal.source.call($scope)" adds the following properties to
+   * the $scope passed in:
+   * $scope.modal {Object}: the detail modal
+   * $scope.openModal(apt) {function}: opens modal with the given apartment
+   * $scope.apt {Object}: the apartment shown in the modal
+   * $scope.favorited {Boolean}: whether $scope.apt is favorited
+   * $scope.toggleFavorite {function}: toggle $scope.apt's favorited status
+   * $scope.closeModal() {function}: close the modal
+   */
+  var source = function() {
+    var scope = this;
+
+    get(scope).then(function(modal) {
+      scope.modal = modal;
+    });
+
+    scope.openModal = function(apt) {
+      scope.apt = apt;
+
+      /* maps */
+      scope.mapsUrl = Maps.url(apt.address);
+      Maps.coords(apt.address).then(function(coords) {
+        var markers = [{
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          id: 0
+        }];
+        scope.map = {
+          center: coords,
+          markers: markers
+        };
+      });
+
+      /* favorites */
+      scope.favorited = Favorites.isFavorited(scope.apt.id);
+
+      scope.modal.show();
+    };
+
+    /* favorites */
+    scope.toggleFavorite = function() {
+      if (scope.apt)
+        scope.favorited = Favorites.toggle(scope.apt.id);
+    };
+
+    /* modal cleanup */
+    scope.closeModal = function() {
+      scope.apt = {image_path: ' '}; // prevents previous image from showing
+      scope.modal.hide();
+    };
+    scope.$on('$destroy', function() {
+      scope.modal.remove();
+    });
+
+  };
+
   return {
-    get: get
+    get: get,
+    source: source
   };
 }])
 
