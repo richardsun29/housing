@@ -1,7 +1,18 @@
-<ion-content class="has-header has-footer" has-bouncing="false">
-  <ion-item>
-<button class="button button-icon icon ion-close" ng-click="closeModal()"></button>
-  </ion-item>
+<ion-header-bar class="bar-positive">
+  <h1 class="title">{{apt.address}}</h1>
+
+  <button class="button button-icon icon"
+          ng-class="favorited ? 'ion-ios-star' : 'ion-ios-star-outline'"
+          ng-click="toggleFavorite()">
+  </button>
+
+  <button class="button button-icon icon ion-ios-close-empty"
+          ng-click="closeModal()">
+  </button>
+</ion-header-bar>
+
+<ion-content class="modal has-header has-footer" has-bouncing="false">
+
   <ion-item>
     <img class="full-image" ng-src="{{apt.image_path}}">
 
