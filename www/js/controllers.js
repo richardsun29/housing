@@ -16,6 +16,8 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
 .controller('ListCtrl', function($scope, $ionicPopup, AptModal, Apartments, Maps, Favorites) {
 
   $scope.apts = [];
+
+  /* lazy loading */
   var page = 0;
   $scope.morePages = true;
 	$scope.loadMore = function() {
@@ -33,6 +35,7 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     });
 	};
 
+  /* search */
   $scope.filter = {
     rent: 2000,
     distance: 1000,
@@ -40,7 +43,6 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     bed: 2,
     bath: 4
   };
-
 
   $scope.search = function() {
     var myPopup = $ionicPopup.show({
@@ -66,10 +68,8 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     });
   };
 
-  $scope.toggleFavorite = function() {
-    if ($scope.apt)
-      $scope.favorited = Favorites.toggle($scope.apt.id);
-  };
+
+  /* Modal Detail */
 
   AptModal.get($scope).then(function(modal) {
     $scope.modal = modal;
@@ -78,6 +78,7 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
   $scope.openModal = function(apt) {
     $scope.apt = apt;
 
+    /* maps */
     $scope.mapsUrl = Maps.url(apt.address);
     Maps.coords(apt.address).then(function(coords) {
       var markers = [{
@@ -91,11 +92,13 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
       };
     });
 
+    /* favorites */
     $scope.favorited = Favorites.isFavorited($scope.apt.id);
 
     $scope.modal.show();
   };
 
+  /* modal cleanup */
   $scope.closeModal = function() {
     $scope.apt.image_path = ' ';
     $scope.modal.hide();
@@ -103,6 +106,13 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
   $scope.$on('$destroy', function() {
     $scope.modal.remove();
   });
+
+  /* favorites */
+  $scope.toggleFavorite = function() {
+    if ($scope.apt)
+      $scope.favorited = Favorites.toggle($scope.apt.id);
+  };
+
 })
 
 .controller('FavoritesCtrl', function($scope, Favorites) {
