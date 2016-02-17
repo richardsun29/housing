@@ -316,26 +316,27 @@ function($ionicModal, Maps, Favorites) {
     });
 
     scope.openModal = function(apt) {
-      scope.apt = apt;
+      scope.modal.show().then(function() {
+        scope.apt = apt;
 
-      /* maps */
-      scope.mapsUrl = Maps.url(apt.address);
-      Maps.coords(apt.address).then(function(coords) {
-        var markers = [{
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-          id: 0
-        }];
-        scope.map = {
-          center: coords,
-          markers: markers
-        };
+        /* maps */
+        scope.mapsUrl = Maps.url(apt.address);
+        Maps.coords(apt.address).then(function(coords) {
+          var markers = [{
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            id: 0
+          }];
+          scope.map = {
+            center: coords,
+            markers: markers
+          };
+        });
+
+        /* favorites */
+        scope.favorited = Favorites.isFavorited(scope.apt.id);
+
       });
-
-      /* favorites */
-      scope.favorited = Favorites.isFavorited(scope.apt.id);
-
-      scope.modal.show();
     };
 
     /* favorites */
@@ -346,8 +347,9 @@ function($ionicModal, Maps, Favorites) {
 
     /* modal cleanup */
     scope.closeModal = function() {
-      scope.apt = {image_path: ' '}; // prevents previous image from showing
-      scope.modal.hide();
+      scope.modal.hide().then(function() {
+        scope.apt = {image_path: ' '}; // prevents previous image from showing
+      });
     };
     scope.$on('$destroy', function() {
       scope.modal.remove();
