@@ -43,15 +43,6 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
       }
     }
   })
-  .state('tab.featured-detail', {
-    url: '/apartments/featured/:id',
-    views: {
-      'tab-featured': {
-        templateUrl: 'templates/detail.html',
-        controller: 'DetailCtrl'
-      }
-    }
-  })
 
   .state('tab.list', {
       url: '/list',
@@ -62,15 +53,6 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
         }
       }
     })
-    .state('tab.list-detail', {
-      url: '/apartments/list/:id',
-      views: {
-        'tab-list': {
-          templateUrl: 'templates/detail.html',
-          controller: 'DetailCtrl'
-        }
-      }
-    })
 
   .state('tab.favorites', {
     url: '/favorites',
@@ -78,15 +60,6 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
       'tab-favorites': {
         templateUrl: 'templates/favorites.html',
         controller: 'FavoritesCtrl'
-      }
-    }
-  })
-  .state('tab.favorites-detail', {
-    url: '/apartments/favorites/:id',
-    views: {
-      'tab-favorites': {
-        templateUrl: 'templates/detail.html',
-        controller: 'DetailCtrl'
       }
     }
   })
