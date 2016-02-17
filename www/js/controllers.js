@@ -1,10 +1,13 @@
 angular.module('controllers', ['uiGmapgoogle-maps'])
 
-.controller('TabsCtrl', ['$state', '$scope',
-function($state, $scope) {
+.controller('TabsCtrl', ['$state', '$scope', 'AptModal',
+function($state, $scope, AptModal) {
   $scope.goto = function(state, params) {
     $state.go(state, params);
   };
+
+  /* Modal Detail */
+  AptModal.source.call($scope);
 }])
 
 .controller('FeaturedCtrl', ['$scope', 'Apartments',
@@ -15,9 +18,9 @@ function($scope, Apartments) {
   });
 }])
 
-.controller('ListCtrl', ['$scope', '$ionicPopup', 'AptModal', 'Apartments',
+.controller('ListCtrl', ['$scope', '$ionicPopup', 'Apartments',
     'Maps', 'Favorites',
-function($scope, $ionicPopup, AptModal, Apartments, Maps, Favorites) {
+function($scope, $ionicPopup, Apartments, Maps, Favorites) {
 
   $scope.apts = [];
 
@@ -71,11 +74,6 @@ function($scope, $ionicPopup, AptModal, Apartments, Maps, Favorites) {
       ]
     });
   };
-
-
-  /* Modal Detail */
-  AptModal.source.call($scope);
-
 }])
 
 .controller('FavoritesCtrl', ['$scope', 'Favorites',
