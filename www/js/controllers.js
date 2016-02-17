@@ -104,7 +104,7 @@ function($scope, $ionicPopup, AptModal, Apartments, Maps, Favorites) {
 
   /* modal cleanup */
   $scope.closeModal = function() {
-    $scope.apt.image_path = ' ';
+    $scope.apt = {image_path: ' '}; // prevents previous image from showing
     $scope.modal.hide();
   };
   $scope.$on('$destroy', function() {
