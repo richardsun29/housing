@@ -1,6 +1,7 @@
 angular.module('services', ['ngStorage'])
 
-.factory('Apartments', function($http, $q, Images) {
+.factory('Apartments', ['$http', '$q', 'Images',
+function($http, $q, Images) {
   var endpoint = 'http://dev.bruinmobile.com/housing/getAptData.php';
 
   var apts_map = {};
@@ -81,9 +82,10 @@ angular.module('services', ['ngStorage'])
     getId: getId,
     getPage: getPage,
   }
-})
+}])
 
-.factory('Favorites', function($localStorage, $q, Apartments) {
+.factory('Favorites', ['$localStorage', '$q', 'Apartments',
+function($localStorage, $q, Apartments) {
   //$localStorage.$reset(); // for debugging
   $localStorage.favorites = $localStorage.favorites || {};
   var favorites = $localStorage.favorites;
@@ -147,9 +149,10 @@ angular.module('services', ['ngStorage'])
     isFavorited: isFavorited,
     get: getFavoriteApts
   };
-})
+}])
 
-.factory('Maps', function($http, $q) {
+.factory('Maps', ['$http', '$q',
+function($http, $q) {
   var zip = '90024'; // Westwood
 
   var encodeAddress = function(address) {
@@ -186,7 +189,7 @@ angular.module('services', ['ngStorage'])
     url: appleMapsUrl,
     coords: addressToCoords
   };
-})
+}])
 
 .factory('Images', function() {
   // images: entity_id -> basename
@@ -284,7 +287,7 @@ angular.module('services', ['ngStorage'])
   };
 })
 
-.factory('AptModal', function($ionicModal) {
+.factory('AptModal', ['$ionicModal', function($ionicModal) {
   var detailTemplate = 'templates/detail.html';
 
   var get = function(scope) {
@@ -298,6 +301,6 @@ angular.module('services', ['ngStorage'])
   return {
     get: get
   };
-})
+}])
 
 ;

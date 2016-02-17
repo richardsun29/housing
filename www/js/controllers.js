@@ -1,19 +1,23 @@
 angular.module('controllers', ['uiGmapgoogle-maps'])
 
-.controller('TabsCtrl', function($state, $scope) {
+.controller('TabsCtrl', ['$state', '$scope',
+function($state, $scope) {
   $scope.goto = function(state, params) {
     $state.go(state, params);
   };
-})
+}])
 
-.controller('FeaturedCtrl', function($scope, Apartments) {
+.controller('FeaturedCtrl', ['$scope', 'Apartments',
+function($scope, Apartments) {
   Apartments.getFeatured().then(function(response) {
     $scope.apts = response;
     console.log($scope.apts);
   });
-})
+}])
 
-.controller('ListCtrl', function($scope, $ionicPopup, AptModal, Apartments, Maps, Favorites) {
+.controller('ListCtrl', ['$scope', '$ionicPopup', 'AptModal', 'Apartments',
+    'Maps', 'Favorites',
+function($scope, $ionicPopup, AptModal, Apartments, Maps, Favorites) {
 
   $scope.apts = [];
 
@@ -113,16 +117,18 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
       $scope.favorited = Favorites.toggle($scope.apt.id);
   };
 
-})
+}])
 
-.controller('FavoritesCtrl', function($scope, Favorites) {
+.controller('FavoritesCtrl', ['$scope', 'Favorites',
+function($scope, Favorites) {
   Favorites.get().then(function(resp) {
     $scope.apts = resp;
     console.log($scope.apts);
   });
-})
+}])
 
-.controller('MapCtrl', function($scope, Apartments, Maps) {
+.controller('MapCtrl', ['$scope', 'Apartments', 'Maps',
+function($scope, Apartments, Maps) {
   Apartments.getAll().then(function(apts) {
     $scope.apts = apts;
 
@@ -143,6 +149,6 @@ angular.module('controllers', ['uiGmapgoogle-maps'])
     //}
 
   });
-})
+}])
 
 ;
