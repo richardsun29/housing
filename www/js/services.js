@@ -86,12 +86,13 @@ function($http, $q, Images) {
 
 .factory('Favorites', ['$localStorage', '$q', 'Apartments',
 function($localStorage, $q, Apartments) {
-  //$localStorage.$reset(); // for debugging
   $localStorage.favorites = $localStorage.favorites || {};
   var favorites = $localStorage.favorites;
 
   var favoriteApts = [];
   var favoriteAptsPromise = $q.defer();
+  if (Object.keys(favorites).length == 0)
+    favoriteAptsPromise.resolve();
   for (var i in favorites) {
     Apartments.getId(i).then(function(apt) {
       favoriteApts.push(apt);
@@ -128,10 +129,7 @@ function($localStorage, $q, Apartments) {
   };
 
   var toggle = function(id) {
-    if (isFavorited(id))
-      return remove(id);
-    else
-      return add(id);
+    return isFavorited(id) ? remove(id) : add(id);
   };
 
   var getFavoriteApts = function(id) {
