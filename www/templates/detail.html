@@ -1,34 +1,35 @@
-<ion-header-bar class="bar-positive">
-  <h1 class="title">{{apt.address}}</h1>
+<ion-modal-view>
+  <ion-header-bar class="bar-positive">
+    <h1 class="title">{{apt.address}}</h1>
 
-  <button class="button button-icon icon"
-          ng-class="favorited ? 'ion-ios-star' : 'ion-ios-star-outline'"
-          ng-click="toggleFavorite()">
-  </button>
+    <button class="button button-icon icon"
+            ng-class="favorited ? 'ion-ios-star' : 'ion-ios-star-outline'"
+            ng-click="toggleFavorite()">
+    </button>
 
-  <button class="button button-icon icon ion-ios-close-empty"
-          ng-click="closeModal()">
-  </button>
-</ion-header-bar>
+    <button class="button button-icon icon ion-ios-close-empty"
+            ng-click="closeModal()">
+    </button>
+  </ion-header-bar>
 
-<ion-content class="modal has-header has-footer" has-bouncing="false">
+  <ion-content>
 
-  <ion-item>
-    <img class="full-image" ng-src="{{apt.image_path}}">
+    <ion-item>
+      <img class="full-image" ng-src="{{apt.image_path}}">
 
-    <div><b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a></div>
-    <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | currency}}</div>
-    <div><b>Total Views: </b>{{apt.number_of_views}}</div>
-  </ion-item>
+      <div><b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a></div>
+      <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | currency}}</div>
+    </ion-item>
 
-  <ion-item>
-    <ui-gmap-google-map center="map.center" zoom="14">
-      <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'">
-      </ui-gmap-markers>
-    </ui-gmap-google-map>
-    <a href="{{mapsUrl}}">
-      <button class="button button-block button-positive">Open in Maps</button>
-    </a>
-  </ion-item>
+    <ion-item>
+      <ui-gmap-google-map center="map.center" zoom="14">
+        <ui-gmap-markers models="map.markers" coords="'self'" icon="'icon'">
+        </ui-gmap-markers>
+      </ui-gmap-google-map>
+      <a href="{{mapsUrl}}">
+        <button class="button button-block button-positive">Open in Maps</button>
+      </a>
+    </ion-item>
 
-</ion-content>
+  </ion-content>
+</ion-modal-view>
