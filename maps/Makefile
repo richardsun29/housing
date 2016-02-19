@@ -21,7 +21,7 @@ $(programs): % : %.js
 APTS = apartments.json
 
 $(APTS): apt-list
-dist-matrix: $(APTS)
+dist-matrix coords: $(APTS)
 
 clean:
 	rm -rf *.js

@@ -1,3 +1,4 @@
 *.js
 apartments.json
 distances.tsv
+coords.tsv

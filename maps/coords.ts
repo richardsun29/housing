@@ -9,8 +9,8 @@ interface Apartment {
 }
 
 interface Coords {
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
 }
 
 var contents: Buffer = fs.readFileSync('apartments.json');
@@ -23,25 +23,27 @@ var options: string = querystring.stringify({
   address: ''
 });
 
-var addressToCoords = function(address: string): void {
-  https.get(`${endpt}?${options}${address}`, res => {
+var addressToCoords = function(apt: Apartment): void {
+  https.get(`${endpt}?${options}${apt.address}`, res => {
     var body: string = '';
     res.on('data', chunk => {
       body += chunk;
     });
     res.on('end', () => {
-      print_coords(JSON.parse(body));
+      var coords: Coords = JSON.parse(body).results[0].geometry.location;
+      console.log(`${apt.id}\t${coords.lat}\t${coords.lng}`);
     });
   }).on('error', e => console.error);
 };
 
-var print_coords = function(body): void {
-  var res = body.results[0].geometry.location
-  var coords: Coords = {
-    latitude: res.lat,
-    longitude: res.lng
-  };
-  console.log(coords);
-};
+console.log('id\tlatitude\tlongitude\t');
 
-addressToCoords('415 Gayley');
+var i: number = 0;
+var interval = setInterval(() => {
+  if (i >= apartments.length)
+    return clearInterval(interval);
+
+  addressToCoords(apartments[i]);
+  i++;
+
+}, 1000);
