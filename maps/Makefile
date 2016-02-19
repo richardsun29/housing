@@ -1,8 +1,9 @@
 TSC = $$NPM_PACKAGES/bin/tsc
 ARGS = --module commonjs
 
-sources = dist-matrix.ts apt-list.ts
-compiled = $(sources:%.ts=%.js)
+programs = apt-list dist-matrix coords
+sources  = $(programs:%=%.ts)
+compiled = $(programs:%=%.js)
 d_ts = node.d.ts
 
 all: $(d_ts) $(compiled)
@@ -13,13 +14,14 @@ $(d_ts):
 %.js: %.ts
 	$(TSC) $(ARGS) $^
 
-run-apt: apt-list.js
-	node apt-list.js
+$(programs): % : %.js
+	node $@.js
 
-run-map: dist-matrix.js
-	node dist-matrix.js
 
-apartments.json: run-apt
+APTS = apartments.json
+
+$(APTS): apt-list
+dist-matrix: $(APTS)
 
 clean:
 	rm -rf *.js
