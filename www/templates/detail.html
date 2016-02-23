@@ -14,11 +14,12 @@
 
   <ion-content>
 
-    <ion-item>
-      <img class="full-image" ng-src="{{apt.image_path}}">
+    <ion-item ng-if="apt.description" ng-bind-html="apt.description"></ion-item>
 
+    <ion-item ng-if="!apt.description">
+      <img class="full-image" ng-src="{{apt.image_path}}">
       <div><b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a></div>
-      <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | currency}}</div>
+      <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | rent}}</div>
     </ion-item>
 
     <ion-item>

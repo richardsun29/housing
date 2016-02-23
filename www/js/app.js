@@ -91,4 +91,14 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
   };
 })
 
+.filter('rent', function() {
+  return function(input) {
+    var num = parseFloat(input);
+    if (isNaN(num) || num == 0)
+      return 'Unavailable';
+    else
+      return '$' + input;
+  };
+})
+
 ;
