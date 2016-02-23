@@ -12,26 +12,30 @@ function($http, $q, Images) {
     $http.get(endpoint).then(function(response) {
       var data = {};
 
-      // TEMPORARY: insert image links
-      for (var i in response.data) {
-        response.data[i] = response.data[i].map(function(apt) {
-          apt.image_path = Images.full(apt.entity_id);
-          apt.thumbnail = Images.thumb(apt.entity_id);
-          return apt;
-        });
-      }
+      featured = formatApts(response.data.featured_apt_data);
 
-      response.data.main_apt_data.forEach(function(apt) {
-        apartments[apt.id] = apt;
+      var main = formatApts(response.data.main_apt_data);
+      main.forEach(function(apt) {
+        apartments[apt.id] = apt; // map index == id
       });
-      featured = response.data.featured_apt_data;
 
       deferred.resolve(apartments);
-      console.log(apartments[148]);
     }, function(error) {
       deferred.reject(error);
     });
     return deferred.promise;
+  };
+
+  /* raw database response -> app format
+   * Use default property names/values unless you want to change */
+  var formatApts = function(apts) {
+    return apts.map(function(apt) {
+      // TEMPORARY: insert image links
+      apt.image_path = Images.full(apt.entity_id);
+      apt.thumbnail = Images.thumb(apt.entity_id);
+
+      return apt;
+    });
   };
 
   var waitForFetch = function(deferred, callback) {
