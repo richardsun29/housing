@@ -4,8 +4,7 @@ angular.module('services', ['ngStorage'])
 function($http, $q, Images) {
   var endpoint = 'http://dev.bruinmobile.com/housing/getAptData.php';
 
-  var apts_map = {};
-  var apts_arr = [];
+  var apartments = [];
   var featured = [];
 
   var fetch = function() {
@@ -23,12 +22,11 @@ function($http, $q, Images) {
       }
 
       response.data.main_apt_data.forEach(function(apt) {
-        apts_map[apt.id] = apt;
+        apartments[apt.id] = apt;
       });
       featured = response.data.featured_apt_data;
 
-      apts_arr = response.data.main_apt_data;
-      deferred.resolve(response.data.main_apt_data);
+      deferred.resolve(apartments);
     }, function(error) {
       deferred.reject(error);
     });
@@ -36,7 +34,7 @@ function($http, $q, Images) {
   };
 
   var waitForFetch = function(deferred, callback) {
-    if (apts_arr.length == 0) {
+    if (apartments.length == 0) {
       fetch().then(function() {
         deferred.resolve(callback());
       });
@@ -60,7 +58,7 @@ function($http, $q, Images) {
   var getId = function(id) {
     var deferred = $q.defer();
     waitForFetch(deferred, function() {
-      return apts_map[id];
+      return apartments[id];
     });
     return deferred.promise;
   };
@@ -71,7 +69,7 @@ function($http, $q, Images) {
     var deferred = $q.defer();
 
     waitForFetch(deferred, function() {
-      return apts_arr.slice(start, start + perPage);
+      return apartments.slice(start, start + perPage);
     });
     return deferred.promise;
   }
