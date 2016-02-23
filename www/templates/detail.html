@@ -18,8 +18,18 @@
 
     <ion-item ng-if="!apt.description">
       <img class="full-image" ng-src="{{apt.image_path}}">
-      <div><b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a></div>
-      <div><b>Monthly Rent: </b>{{apt.monthly_rent_avg | rent}}</div>
+
+      <div>
+        <b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a>
+      </div>
+
+      <div>
+        <b>Monthly Rent: </b>{{apt.monthly_rent_avg | rent}}
+      </div>
+
+      <div ng-if="apt.distance_to_campus">
+        <b>Distance to Campus: </b>{{apt.distance_to_campus | distance}}
+      </div>
     </ion-item>
 
     <ion-item>
