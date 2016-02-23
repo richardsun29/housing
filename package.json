@@ -22,7 +22,9 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard"
   ],
-  "cordovaPlatforms": [],
+  "cordovaPlatforms": [
+    "ios"
+  ],
   "license": "ISC",
   "repository": {
     "type": "git",

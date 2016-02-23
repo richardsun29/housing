@@ -5,7 +5,10 @@ node_modules/
 platforms/
 plugins/
 www/lib/
+resources/android/
+resources/ios/
 *.css
 *.swp
+.DS_Store
 
 node.d.ts
