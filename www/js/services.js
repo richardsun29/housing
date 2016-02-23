@@ -168,6 +168,8 @@ function($http, $q) {
   var appleMapsUrl = (function() {
     var endpoint = 'http://maps.apple.com/?address=';
     return function(address) {
+      // remove multiple house numbers, eg. '412-430 Kelton'
+      address = address.match(/\d+[A-Za-z ]+/)[0];
       return endpoint + encodeAddress(address) + '+' + zip;
     };
   })();
