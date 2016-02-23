@@ -27,6 +27,7 @@ function($http, $q, Images) {
       featured = response.data.featured_apt_data;
 
       deferred.resolve(apartments);
+      console.log(apartments[148]);
     }, function(error) {
       deferred.reject(error);
     });
@@ -44,7 +45,11 @@ function($http, $q, Images) {
   };
 
   var getMain = function() {
-    return fetch();
+    var deferred = $q.defer();
+    waitForFetch(deferred, function() {
+      return apartments;
+    });
+    return deferred.promise;
   };
 
   var getFeatured = function() {
