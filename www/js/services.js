@@ -31,8 +31,8 @@ function($http, $q, Images) {
   var formatApts = function(apts) {
     return apts.map(function(apt) {
       // TEMPORARY: insert image links
-      apt.image_path = Images.full(apt.entity_id);
-      apt.thumbnail = Images.thumb(apt.entity_id);
+      apt.image_path = Images.get('large', apt.entity_id);
+      apt.thumbnail = Images.get('thumb', apt.entity_id);
 
       return apt;
     });
@@ -277,20 +277,21 @@ function($http, $q) {
 
   var url = 'http://dev.bruinmobile.com/housing/images/';
 
-  var get = function(subdirectory, entity_id) {
+  var sizes = ['thumb', 'med', 'large'];
+  var get = function(size, entity_id) {
+    if (sizes.indexOf(size) == -1) {
+      console.error('"' + size + '" is not one of the available sizes: "'
+          + sizes.join('", "') + '"');
+    }
+
     if (images[entity_id])
-      return url + subdirectory + images[entity_id];
+      return url + size + '/' + images[entity_id];
     else
       return undefined;
   };
 
   return {
-    full: function(entity_id) {
-      return get('full/', entity_id);
-    },
-    thumb: function(entity_id) {
-      return get('thumb/', entity_id);
-    }
+    get: get
   };
 })
 
