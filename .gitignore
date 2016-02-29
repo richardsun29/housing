@@ -6,7 +6,7 @@ platforms/
 plugins/
 resources/android/
 resources/ios/
-*.css
+app.min.css
 *.swp
 .DS_Store
 
