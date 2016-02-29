@@ -111,4 +111,10 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
   };
 })
 
+.filter('contact', function() {
+  return function(input) {
+    return input || 'Unavailable';
+  }
+})
+
 ;
