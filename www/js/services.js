@@ -303,7 +303,7 @@ function($ionicModal, Maps, Favorites) {
     return $ionicModal.fromTemplateUrl(detailTemplate, {
       scope: scope,
       animation: 'slide-in-up',
-      backdropClickToClose: false
+      backdropClickToClose: true
     });
   };
 
