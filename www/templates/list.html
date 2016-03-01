@@ -1,4 +1,4 @@
-<ion-view view-title="Apartments">
+<ion-view class ="list_apartment" view-title="Apartments">
 
   <ion-nav-buttons side="secondary">
     <button class="button button-icon icon ion-ios-search"
@@ -10,11 +10,13 @@
   <ion-content>
 
     <ion-list>
-      <ion-item class="item item-thumbnail-left" ng-repeat="apt in apts"
+      <ion-item class="item" ng-repeat="apt in apts"
         ng-click="openModal(apt)">
-        <img ng-src="{{apt.thumbnail}}">
+        <img ng-src="{{apt.image_path}}">
         <h2>{{apt.address}}</h2>
-        <p>Rent: {{apt.monthly_rent_avg | currency}}</p>
+        <div class="info">
+            <p>Rent: {{apt.monthly_rent_avg | currency}}</p>
+        </div>
       </ion-item>
     </ion-list>
 
