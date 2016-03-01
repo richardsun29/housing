@@ -39,7 +39,13 @@
     <ion-item>
       <ui-gmap-google-map center="map.center" zoom="14">
         <ui-gmap-marker coords="map.coords" idKey="0"
-          options="map.options" click="toggleLabel">
+          options="{
+            labelVisible: map.showLabel,
+            labelContent: apt.address,
+            labelClass: 'marker-label',
+            labelAnchor: '-20 40',
+            }"
+          click="toggleLabel">
         </ui-gmap-marker>
       </ui-gmap-google-map>
       <a href="{{mapsUrl}}">
