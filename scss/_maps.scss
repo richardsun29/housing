@@ -2,6 +2,13 @@
   height: 50vw;
 }
 
+.marker-label {
+  background: #fff;
+  border: 1px solid #888;
+  border-radius: 5px;
+  padding: 10px;
+}
+
 .full-map {
   .angular-google-map-container {
     height: 100vmin;

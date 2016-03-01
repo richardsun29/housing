@@ -330,15 +330,30 @@ function($ionicModal, Maps, Favorites) {
         /* maps */
         scope.mapsUrl = Maps.url(apt.address);
         Maps.coords(apt.address).then(function(coords) {
-          var markers = [{
+          // start centered on marker
+          var center = {
             latitude: coords.latitude,
-            longitude: coords.longitude,
-            id: 0
-          }];
-          scope.map = {
-            center: coords,
-            markers: markers
+            longitude: coords.longitude
           };
+
+          var options = {
+            labelVisible: true,
+            labelContent: apt.address,
+            labelClass: 'marker-label',
+            labelAnchor: '-20 40',
+            raiseOnDrag: false
+          };
+
+          scope.map = {
+            center: center,
+            coords: coords,
+            options: options,
+          };
+
+          scope.toggleLabel = function(label, event, marker) {
+            console.log(arguments);
+          };
+
         });
 
         /* favorites */
