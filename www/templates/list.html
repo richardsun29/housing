@@ -15,13 +15,13 @@
         <img ng-src="{{apt.image_path}}">
         <h2>{{apt.address}}</h2>
         <div class="info">
-            <p>Rent: {{apt.monthly_rent_avg | currency}}</p>
+            <p>Rent: {{apt.monthly_rent_avg | rent}}</p>
         </div>
       </ion-item>
     </ion-list>
 
     <ion-infinite-scroll ng-if="morePages"
-       on-infinite="loadMore()" distance="10%" immediate-check="true">
+       on-infinite="loadMore()" distance="0%" immediate-check="true">
     </ion-infinite-scroll>
   </ion-content>
 </ion-view>

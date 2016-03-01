@@ -3,12 +3,6 @@
     <ion-slide-page ng-repeat="apt in apts" class="slide"
                     style="background-image:url({{apt.image_path}})"
                     ng-click="openModal(apt)">
-      <div class="overlay overlay-ios">
-        <div class="inner">
-          <h2>{{apt.address}}</h2>
-          <p>Rent: {{apt.monthly_rent_avg | currency}}</p>
-        </div>
-      </div>
     </ion-slide-page>
   </ion-slides>
 </ion-view>

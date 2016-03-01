@@ -91,4 +91,30 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
   };
 })
 
+.filter('rent', function() {
+  return function(input) {
+    var num = parseFloat(input);
+    if (isNaN(num) || num == 0)
+      return 'Unavailable';
+    else
+      return '$' + input;
+  };
+})
+
+.filter('distance', function() {
+  return function(input) {
+    var meters = parseFloat(input);
+    if (isNaN(meters) || meters == 0)
+      return 'Unavailable';
+    else
+      return (meters/1609.34).toFixed(1) + ' mi.';
+  };
+})
+
+.filter('contact', function() {
+  return function(input) {
+    return input || 'Unavailable';
+  }
+})
+
 ;

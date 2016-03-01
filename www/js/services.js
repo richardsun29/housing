@@ -4,8 +4,7 @@ angular.module('services', ['ngStorage'])
 function($http, $q, Images) {
   var endpoint = 'http://dev.bruinmobile.com/housing/getAptData.php';
 
-  var apts_map = {};
-  var apts_arr = [];
+  var apartments = [];
   var featured = [];
 
   var fetch = function() {
@@ -13,30 +12,34 @@ function($http, $q, Images) {
     $http.get(endpoint).then(function(response) {
       var data = {};
 
-      // TEMPORARY: insert image links
-      for (var i in response.data) {
-        response.data[i] = response.data[i].map(function(apt) {
-          apt.image_path = Images.full(apt.entity_id);
-          apt.thumbnail = Images.thumb(apt.entity_id);
-          return apt;
-        });
-      }
+      featured = formatApts(response.data.featured_apt_data);
 
-      response.data.main_apt_data.forEach(function(apt) {
-        apts_map[apt.id] = apt;
+      var main = formatApts(response.data.main_apt_data);
+      main.forEach(function(apt) {
+        apartments[apt.id] = apt; // map index == id
       });
-      featured = response.data.featured_apt_data;
 
-      apts_arr = response.data.main_apt_data;
-      deferred.resolve(response.data.main_apt_data);
+      deferred.resolve(apartments);
     }, function(error) {
       deferred.reject(error);
     });
     return deferred.promise;
   };
 
+  /* raw database response -> app format
+   * Use default property names/values unless you want to change */
+  var formatApts = function(apts) {
+    return apts.map(function(apt) {
+      // TEMPORARY: insert image links
+      apt.image_path = Images.get('large', apt.entity_id);
+      apt.thumbnail = Images.get('thumb', apt.entity_id);
+
+      return apt;
+    });
+  };
+
   var waitForFetch = function(deferred, callback) {
-    if (apts_arr.length == 0) {
+    if (apartments.length == 0) {
       fetch().then(function() {
         deferred.resolve(callback());
       });
@@ -46,7 +49,11 @@ function($http, $q, Images) {
   };
 
   var getMain = function() {
-    return fetch();
+    var deferred = $q.defer();
+    waitForFetch(deferred, function() {
+      return apartments;
+    });
+    return deferred.promise;
   };
 
   var getFeatured = function() {
@@ -60,7 +67,7 @@ function($http, $q, Images) {
   var getId = function(id) {
     var deferred = $q.defer();
     waitForFetch(deferred, function() {
-      return apts_map[id];
+      return apartments[id];
     });
     return deferred.promise;
   };
@@ -71,7 +78,7 @@ function($http, $q, Images) {
     var deferred = $q.defer();
 
     waitForFetch(deferred, function() {
-      return apts_arr.slice(start, start + perPage);
+      return apartments.slice(start, start + perPage);
     });
     return deferred.promise;
   }
@@ -86,12 +93,13 @@ function($http, $q, Images) {
 
 .factory('Favorites', ['$localStorage', '$q', 'Apartments',
 function($localStorage, $q, Apartments) {
-  //$localStorage.$reset(); // for debugging
   $localStorage.favorites = $localStorage.favorites || {};
   var favorites = $localStorage.favorites;
 
   var favoriteApts = [];
   var favoriteAptsPromise = $q.defer();
+  if (Object.keys(favorites).length == 0)
+    favoriteAptsPromise.resolve();
   for (var i in favorites) {
     Apartments.getId(i).then(function(apt) {
       favoriteApts.push(apt);
@@ -128,10 +136,7 @@ function($localStorage, $q, Apartments) {
   };
 
   var toggle = function(id) {
-    if (isFavorited(id))
-      return remove(id);
-    else
-      return add(id);
+    return isFavorited(id) ? remove(id) : add(id);
   };
 
   var getFavoriteApts = function(id) {
@@ -163,6 +168,8 @@ function($http, $q) {
   var appleMapsUrl = (function() {
     var endpoint = 'http://maps.apple.com/?address=';
     return function(address) {
+      // remove multiple house numbers, eg. '412-430 Kelton'
+      address = address.match(/\d+[A-Za-z ]+/)[0];
       return endpoint + encodeAddress(address) + '+' + zip;
     };
   })();
@@ -270,20 +277,21 @@ function($http, $q) {
 
   var url = 'http://dev.bruinmobile.com/housing/images/';
 
-  var get = function(subdirectory, entity_id) {
+  var sizes = ['thumb', 'med', 'large'];
+  var get = function(size, entity_id) {
+    if (sizes.indexOf(size) == -1) {
+      console.error('"' + size + '" is not one of the available sizes: "'
+          + sizes.join('", "') + '"');
+    }
+
     if (images[entity_id])
-      return url + subdirectory + images[entity_id];
+      return url + size + '/' + images[entity_id];
     else
       return undefined;
   };
 
   return {
-    full: function(entity_id) {
-      return get('full/', entity_id);
-    },
-    thumb: function(entity_id) {
-      return get('thumb/', entity_id);
-    }
+    get: get
   };
 })
 
@@ -295,7 +303,7 @@ function($ionicModal, Maps, Favorites) {
     return $ionicModal.fromTemplateUrl(detailTemplate, {
       scope: scope,
       animation: 'slide-in-up',
-      backdropClickToClose: false
+      backdropClickToClose: true
     });
   };
 

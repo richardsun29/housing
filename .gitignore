@@ -4,8 +4,10 @@
 node_modules/
 platforms/
 plugins/
-www/lib/
-*.css
+resources/android/
+resources/ios/
+app.min.css
 *.swp
+.DS_Store
 
 node.d.ts

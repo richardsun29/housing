@@ -1,14 +1,21 @@
-<ion-view view-title="Favorites">
+<ion-view class="favorites" view-title="Favorites">
   <ion-content>
     <ion-list>
 
-      <ion-item class="item item-thumbnail-left" ng-repeat="apt in apts"
+      <ion-item class="item-thumbnail-left" ng-repeat="apt in apts"
         ng-click="openModal(apt)">
 
-        <img ng-src="{{apt.image_path}}">
+        <img ng-src="{{apt.thumbnail}}">
         <h2>{{apt.address}}</h2>
-        <p>Rent: {{apt.monthly_rent_avg | currency}}</p>
+        <p>Rent: {{apt.monthly_rent_avg | rent}}</p>
 
+      </ion-item>
+
+      <ion-item class="empty" ng-if="apts.length == 0">
+        <h2>
+          Tap the star <i class="icon ion-star"></i> next to an apartment to
+          add it to your favorites
+        </h2>
       </ion-item>
 
     </ion-list>
