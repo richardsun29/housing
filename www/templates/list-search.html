@@ -21,15 +21,23 @@
   </div>
 
   <div>
-    <label>Bedrooms: {{filter.bed}}</label>
-    <input type="range" min="0" max="5" step="1"
-    ng-model="filter.bed">
+    <label>Bedrooms: </label>
+    <select ng-model="filter.bed">
+      <option ng-repeat="range in ranges.bed track by $index"
+              value="{{range}}">
+      {{range.text}}
+      </option>
+    </select>
   </div>
 
   <div>
-    <label>Bathrooms: {{filter.bath}}</label>
-    <input type="range" min="0" max="5" step="1"
-    ng-model="filter.bath">
+    <label>Bathrooms: </label>
+    <select ng-model="filter.bath">
+      <option ng-repeat="range in ranges.bath track by $index"
+              value="{{range}}">
+      {{range.text}}
+      </option>
+    </select>
   </div>
 
 </div>
