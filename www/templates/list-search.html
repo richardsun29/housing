@@ -2,41 +2,33 @@
 
   <div>
     <label>Rent: </label>
-    <select ng-model="filter.rent">
-      <option ng-repeat="range in ranges.rent track by $index"
-              value="{{range}}">
-      {{range.text}}
-      </option>
+    <select ng-model="filter.rent"
+      ng-options="option.text for option in ranges.rent track by $index">
+      <option value="">Any</option>
     </select>
   </div>
 
   <div>
     <label>Distance to campus: </label>
-    <select ng-model="filter.distance">
-      <option ng-repeat="range in ranges.distance track by $index"
-              value="{{range}}">
-      {{range.text}}
-      </option>
+    <select ng-model="filter.distance"
+      ng-options="option.text for option in ranges.distance track by $index">
+      <option value="">Any</option>
     </select>
   </div>
 
   <div>
     <label>Bedrooms: </label>
-    <select ng-model="filter.bed">
-      <option ng-repeat="range in ranges.bed track by $index"
-              value="{{range}}">
-      {{range.text}}
-      </option>
+    <select ng-model="filter.bed"
+      ng-options="option.text for option in ranges.bed track by $index">
+      <option value="">Any</option>
     </select>
   </div>
 
   <div>
     <label>Bathrooms: </label>
-    <select ng-model="filter.bath">
-      <option ng-repeat="range in ranges.bath track by $index"
-              value="{{range}}">
-      {{range.text}}
-      </option>
+    <select ng-model="filter.bath"
+      ng-options="option.text for option in ranges.bath track by $index">
+      <option value="">Any</option>
     </select>
   </div>
 

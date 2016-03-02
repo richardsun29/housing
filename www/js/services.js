@@ -396,36 +396,38 @@ function($ionicPopup, SearchRanges) {
     };
   };
 
+  var defaults = {};
+  Object.keys(SearchRanges).forEach(function(filter) {
+    defaults[filter] = SearchRanges[filter][0];
+  });
+
   return {
     show: show,
-    ranges: SearchRanges
+    ranges: SearchRanges,
+    defaults: defaults
   };
 }])
 
 .constant('SearchRanges', {
   rent: [
-    { text: 'Any', min: -1, max: -1 },
     { text: '< $1000', min: -1, max: 1000 },
     { text: '$1000 - $2000', min: 1000, max: 2000 },
     { text: '$2000 - $3000', min: 2000, max: 3000 },
     { text: '> $3000', min: 3000, max: -1 }
   ],
   distance: [
-    { text: 'Any', min: -1, max: -1 },
     { text: '< .5 miles', min: -1, max: 0.5 },
     { text: '.5 - 1 miles', min: 0.5, max: 1.0 },
     { text: '1 - 2 miles', min: 1, max: 2 },
     { text: '> 2 miles', min: 2, max: -1 }
   ],
   bed: [
-    { text: 'Any', min: -1, max: -1 },
     { text: '0', min: 0, max: 0 },
     { text: '1', min: 1, max: 1 },
     { text: '2', min: 2, max: 2 },
     { text: '3+', min: 3, max: -1 }
   ],
   bath: [
-    { text: 'Any', min: -1, max: -1 },
     { text: '0', min: 0, max: 0 },
     { text: '1', min: 1, max: 1 },
     { text: '2', min: 2, max: 2 },

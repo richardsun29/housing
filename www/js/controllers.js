@@ -42,18 +42,10 @@ function($scope, $ionicPopup, Apartments, Maps, Favorites, Search) {
     });
 	};
 
-  $scope.ranges = Search.ranges;
-  $scope.search = Search.show($scope);
-
   /* search */
-  $scope.filter = {
-    rent: $scope.ranges.rent[0],
-    distance: $scope.ranges.distance[0],
-    flooring: 'hardwood',
-    bed: 2,
-    bath: 4
-  };
-
+  $scope.ranges = Search.ranges;
+  $scope.filter = Search.defaults;
+  $scope.search = Search.show($scope);
   $scope.search();
 }])
 
