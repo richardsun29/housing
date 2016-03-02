@@ -42,10 +42,66 @@ function($scope, $ionicPopup, Apartments, Maps, Favorites) {
     });
 	};
 
+  $scope.ranges = {};
+  $scope.ranges.rent =  [
+    {
+      text: 'No preference',
+      min: -1,
+      max: -1
+    },
+    {
+      text: '< $1000',
+      min: -1,
+      max: 1000
+    },
+    {
+      text: '$1000 - $2000',
+      min: 1000,
+      max: 2000
+    },
+    {
+      text: '$2000 - $3000',
+      min: 2000,
+      max: 3000
+    },
+    {
+      text: '> $3000',
+      min: 3000,
+      max: -1
+    }
+  ];
+  $scope.ranges.distance = [
+    {
+      text: 'No preference',
+      min: -1,
+      max: -1
+    },
+    {
+      text: '< 0.5 mi',
+      min: -1,
+      max: 0.5
+    },
+    {
+      text: '0.5 - 1.0 mi',
+      min: 0.5,
+      max: 1.0
+    },
+    {
+      text: '1.0 - 2.0 mi',
+      min: 1,
+      max: 2
+    },
+    {
+      text: '> 2.0 mi',
+      min: 2,
+      max: -1
+    }
+  ];
+
   /* search */
   $scope.filter = {
-    rent: 2000,
-    distance: 1000,
+    rent: $scope.ranges.rent[0],
+    distance: $scope.ranges.distance[0],
     flooring: 'hardwood',
     bed: 2,
     bath: 4
@@ -64,16 +120,13 @@ function($scope, $ionicPopup, Apartments, Maps, Favorites) {
           text: '<b>Search</b>',
           type: 'button-positive',
           onTap: function(e) {
-            if (!$scope.data.wifi) {
-              e.preventDefault();
-            } else {
-              return $scope.data.wifi;
-            }
+            console.log($scope.filter);
           }
         }
       ]
     });
   };
+  $scope.search();
 }])
 
 .controller('FavoritesCtrl', ['$scope', 'Favorites',
