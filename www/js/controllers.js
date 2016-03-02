@@ -18,9 +18,8 @@ function($scope, Apartments) {
   });
 }])
 
-.controller('ListCtrl', ['$scope', '$ionicPopup', 'Apartments',
-    'Maps', 'Favorites', 'Search',
-function($scope, $ionicPopup, Apartments, Maps, Favorites, Search) {
+.controller('ListCtrl', ['$scope', 'Apartments', 'Search',
+function($scope, Apartments, Search) {
 
   $scope.apts = [];
 
@@ -49,8 +48,8 @@ function($scope, $ionicPopup, Apartments, Maps, Favorites, Search) {
   $scope.search();
 }])
 
-.controller('FavoritesCtrl', ['$scope', 'Favorites',
-function($scope, Favorites) {
+.controller('FavoritesCtrl', ['$scope', 'Favorites', 'Search',
+function($scope, Favorites, Search) {
   Favorites.get().then(function(resp) {
     $scope.apts = resp;
     console.log($scope.apts);
