@@ -396,15 +396,9 @@ function($ionicPopup, SearchRanges) {
     };
   };
 
-  var defaults = {};
-  Object.keys(SearchRanges).forEach(function(filter) {
-    defaults[filter] = SearchRanges[filter][0];
-  });
-
   return {
     show: show,
     ranges: SearchRanges,
-    defaults: defaults
   };
 }])
 

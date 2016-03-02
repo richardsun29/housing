@@ -44,7 +44,7 @@ function($scope, $ionicPopup, Apartments, Maps, Favorites, Search) {
 
   /* search */
   $scope.ranges = Search.ranges;
-  $scope.filter = Search.defaults;
+  $scope.filter = {};
   $scope.search = Search.show($scope);
   $scope.search();
 }])
