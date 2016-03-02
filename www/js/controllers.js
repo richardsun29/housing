@@ -19,8 +19,8 @@ function($scope, Apartments) {
 }])
 
 .controller('ListCtrl', ['$scope', '$ionicPopup', 'Apartments',
-    'Maps', 'Favorites', 'SearchRanges',
-function($scope, $ionicPopup, Apartments, Maps, Favorites, SearchRanges) {
+    'Maps', 'Favorites', 'Search',
+function($scope, $ionicPopup, Apartments, Maps, Favorites, Search) {
 
   $scope.apts = [];
 
@@ -42,7 +42,9 @@ function($scope, $ionicPopup, Apartments, Maps, Favorites, SearchRanges) {
     });
 	};
 
-  $scope.ranges = SearchRanges;
+  $scope.ranges = Search.ranges;
+  $scope.search = Search.show($scope);
+
   /* search */
   $scope.filter = {
     rent: $scope.ranges.rent[0],
@@ -52,25 +54,6 @@ function($scope, $ionicPopup, Apartments, Maps, Favorites, SearchRanges) {
     bath: 4
   };
 
-  $scope.search = function() {
-    var myPopup = $ionicPopup.show({
-      templateUrl: 'templates/list-search.html',
-      title: 'Search',
-      scope: $scope,
-      buttons: [
-        {
-          text: 'Close'
-        },
-        {
-          text: '<b>Search</b>',
-          type: 'button-positive',
-          onTap: function(e) {
-            console.log($scope.filter);
-          }
-        }
-      ]
-    });
-  };
   $scope.search();
 }])
 

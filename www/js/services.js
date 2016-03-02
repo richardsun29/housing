@@ -371,9 +371,36 @@ function($ionicModal, Maps, Favorites) {
   };
 }])
 
-.factory('Search', function() {
+.factory('Search', ['$ionicPopup', 'SearchRanges',
+function($ionicPopup, SearchRanges) {
 
-})
+  var show = function(scope) {
+    return function() {
+      $ionicPopup.show({
+        templateUrl: 'templates/list-search.html',
+        title: 'Search',
+        scope: scope,
+        buttons: [
+          {
+            text: 'Close'
+          },
+          {
+            text: '<b>Search</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              console.log(scope.filter);
+            }
+          }
+        ]
+      });
+    };
+  };
+
+  return {
+    show: show,
+    ranges: SearchRanges
+  };
+}])
 
 .constant('SearchRanges', {
   rent: [
