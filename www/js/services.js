@@ -72,22 +72,10 @@ function($http, $q, Images) {
     return deferred.promise;
   };
 
-  var getPage = function(page) {
-    var perPage = 10;
-    var start = page * perPage;
-    var deferred = $q.defer();
-
-    waitForFetch(deferred, function() {
-      return apartments.slice(start, start + perPage);
-    });
-    return deferred.promise;
-  }
-
   return {
     getAll: getMain,
     getFeatured: getFeatured,
     getId: getId,
-    getPage: getPage,
   }
 }])
 

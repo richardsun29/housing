@@ -18,34 +18,45 @@ function($scope, Apartments) {
   });
 }])
 
-.controller('ListCtrl', ['$scope', 'Apartments', 'Search',
-function($scope, Apartments, Search) {
+.controller('ListCtrl', ['$scope', '$q', 'Apartments', 'Search',
+function($scope, $q, Apartments, Search) {
 
   $scope.apts = [];
 
   /* lazy loading */
-  var page = 0;
+  var allApts = [];
+  var deferred = $q.defer();
+  var loaded = deferred.promise;
+
+  Apartments.getAll().then(function(apts) {
+    allApts = apts;
+    deferred.resolve();
+    console.log('resolved');
+  });
+
+  var page = 1;
+  var perPage = 10;
   $scope.morePages = true;
-	$scope.loadMore = function() {
-    Apartments.getPage(page++).then(function(apts) {
-      if (apts.length == 0) {
+
+  $scope.loadMore = function() {
+    loaded.then(function() {
+      var start = page * perPage;
+      if (start > allApts.length) {
         $scope.morePages = false;
         return;
       }
-
-      apts.forEach(function(apt) {
-        $scope.apts.push(apt);
-      });
-
+      var slice = allApts.slice(start, start + perPage);
+      $scope.apts = $scope.apts.concat(slice);
       $scope.$broadcast('scroll.infiniteScrollComplete');
+      page++;
     });
-	};
+  };
 
   /* search */
   $scope.ranges = Search.ranges;
   $scope.filter = {};
   $scope.search = Search.show($scope);
-  $scope.search();
+  //$scope.search();
 }])
 
 .controller('FavoritesCtrl', ['$scope', 'Favorites', 'Search',
