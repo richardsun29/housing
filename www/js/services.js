@@ -30,10 +30,13 @@ function($http, $q) {
    * Use default property names/values unless you want to change */
   var formatApts = function(apts) {
     return apts.map(function(apt) {
+
+      // image_path -> {large, med, small}
       apt.images = imgUrls(apt);
 
       // meters -> miles
       apt.distance_to_campus = apt.distance_to_campus / 1609.34;
+
       return apt;
     });
   };
@@ -97,70 +100,39 @@ function($http, $q) {
   }
 }])
 
-.factory('Favorites', ['$localStorage', '$q', 'Apartments',
-function($localStorage, $q, Apartments) {
+.factory('Favorites', ['$localStorage', '$q',
+function($localStorage, $q) {
+
   $localStorage.favorites = $localStorage.favorites || {};
   var favorites = $localStorage.favorites;
 
-  var favoriteApts = [];
-  var favoriteAptsPromise = $q.defer();
-  if (Object.keys(favorites).length == 0)
-    favoriteAptsPromise.resolve();
-  for (var i in favorites) {
-    Apartments.getId(i).then(function(apt) {
-      favoriteApts.push(apt);
-      if (favoriteApts.length >= Object.keys(favorites).length) {
-        favoriteAptsPromise.resolve();
-      }
-    });
-  }
-
-  var isFavorited = function(id) {
-    return favorites[id];
-  };
-
-  var add = function(id) {
-    if (!favorites[id]) {
-      favorites[id] = true;
-      Apartments.getId(id).then(function(apt) {
-        favoriteApts.push(apt);
-      });
-    }
+  var add = function(apt) {
+    favorites[apt.id] = Date.now(); // save time when apt was favorited
+    apt.favorite_mtime = favorites[apt.id];
     return true;
   };
 
-  var remove = function(id) {
-    if (favorites[id]) {
-      delete favorites[id];
-      for (var i in favoriteApts)
-        if (favoriteApts[i].id == id) {
-          favoriteApts.splice(i, 1);
-          break;
-        }
-    }
+  var remote = function(apt) {
+    delete favorites[apt.id];
+    delete apt.favorite_mtime;
     return false;
   };
 
-  var toggle = function(id) {
-    return isFavorited(id) ? remove(id) : add(id);
+  var toggle = function(apt) {
+    return isFavorited(apt) ? remove(apt) : add(apt);
   };
 
-  var getFavoriteApts = function(id) {
-    var deferred = $q.defer();
-    favoriteAptsPromise.promise.then(function() {
-      deferred.resolve(favoriteApts);
-    });
-    return deferred.promise;
+  var isFavorited = function(apt) {
+    return !!apt.favorite_mtime;
   };
 
   return {
     add: add,
     remove: remove,
     toggle: toggle,
-    isFavorited: isFavorited,
-    get: getFavoriteApts
+    isFavorited: isFavorited
   };
-}])
+})
 
 .factory('Maps', ['$http', '$q',
 function($http, $q) {
