@@ -34,6 +34,8 @@ function($http, $q, Images) {
       apt.image_path = Images.get('large', apt.entity_id);
       apt.thumbnail = Images.get('thumb', apt.entity_id);
 
+      // meters -> miles
+      apt.distance_to_campus = apt.distance_to_campus / 1609.34;
       return apt;
     });
   };
