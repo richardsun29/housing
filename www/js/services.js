@@ -377,7 +377,7 @@ function($ionicPopup, SearchRanges) {
   var show = function(scope) {
     return function() {
       $ionicPopup.show({
-        templateUrl: 'templates/list-search.html',
+        templateUrl: 'templates/search.html',
         title: 'Search',
         scope: scope,
         buttons: [
