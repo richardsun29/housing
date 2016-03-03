@@ -10,8 +10,9 @@
   <ion-content>
 
     <ion-list>
-      <ion-item class="item-thumbnail-left" ng-repeat="apt in apts"
-        ng-click="openModal(apt)">
+      <ion-item class="item-thumbnail-left"
+                ng-repeat="apt in apts | SearchFilter:filter"
+                ng-click="openModal(apt)">
         <img ng-src="{{apt.thumbnail}}">
         <h2>{{apt.address}}</h2>
         <p>Rent: {{apt.monthly_rent_avg | rent}}</p>
