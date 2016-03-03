@@ -8,11 +8,12 @@
 
 
   <ion-content>
-
     <ion-list>
       <ion-item class="item-thumbnail-left"
-                ng-repeat="apt in apts | SearchFilter:filter"
+                ng-repeat="apt in apts | SearchFilter:filter |
+                           limitTo:aptLimit track by $index"
                 ng-click="openModal(apt)">
+
         <img ng-src="{{apt.thumbnail}}">
         <h2>{{apt.address}}</h2>
         <p>Rent: {{apt.monthly_rent_avg | rent}}</p>
@@ -20,7 +21,7 @@
     </ion-list>
 
     <ion-infinite-scroll ng-if="morePages"
-       on-infinite="loadMore()" distance="0%" immediate-check="true">
+       on-infinite="loadMore()" distance="0%" immediate-check="false">
     </ion-infinite-scroll>
   </ion-content>
 </ion-view>

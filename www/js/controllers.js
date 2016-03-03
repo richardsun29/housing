@@ -23,40 +23,27 @@ function($scope, $q, Apartments, Search) {
 
   $scope.apts = [];
 
-  /* lazy loading */
-  var allApts = [];
-  var deferred = $q.defer();
-  var loaded = deferred.promise;
-
   Apartments.getAll().then(function(apts) {
-    allApts = apts;
-    deferred.resolve();
-    console.log('resolved');
+    $scope.apts = apts;
+    $scope.loadMore();
   });
 
-  var page = 1;
-  var perPage = 10;
+  /* lazy loading */
   $scope.morePages = true;
 
+  $scope.aptLimit = 0; // number of apartments shown in list
+  var perPage = 10;
   $scope.loadMore = function() {
-    loaded.then(function() {
-      var start = page * perPage;
-      if (start > allApts.length) {
-        $scope.morePages = false;
-        return;
-      }
-      var slice = allApts.slice(start, start + perPage);
-      $scope.apts = $scope.apts.concat(slice);
-      $scope.$broadcast('scroll.infiniteScrollComplete');
-      page++;
-    });
+    $scope.aptLimit += perPage;
+    if ($scope.aptLimit >= $scope.apts.length)
+      $scope.morePages = false;
+    $scope.$broadcast('scroll.infiniteScrollComplete');
   };
 
   /* search */
   $scope.ranges = Search.ranges;
   $scope.filter = {};
   $scope.search = Search.show($scope);
-  //$scope.search();
 }])
 
 .controller('FavoritesCtrl', ['$scope', 'Favorites', 'Search',
