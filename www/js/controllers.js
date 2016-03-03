@@ -18,70 +18,60 @@ function($scope, Apartments) {
   });
 }])
 
-.controller('ListCtrl', ['$scope', '$ionicPopup', 'Apartments',
-    'Maps', 'Favorites',
-function($scope, $ionicPopup, Apartments, Maps, Favorites) {
+.controller('ListCtrl', ['$scope', 'Apartments', 'Search',
+function($scope, Apartments, Search) {
 
   $scope.apts = [];
 
+  Apartments.getAll().then(function(apts) {
+    $scope.apts = apts;
+    $scope.loadMore();
+  });
+
   /* lazy loading */
-  var page = 0;
   $scope.morePages = true;
-	$scope.loadMore = function() {
-    Apartments.getPage(page++).then(function(apts) {
-      if (apts.length == 0) {
-        $scope.morePages = false;
-        return;
-      }
 
-      apts.forEach(function(apt) {
-        $scope.apts.push(apt);
-      });
-
-      $scope.$broadcast('scroll.infiniteScrollComplete');
-    });
-	};
+  $scope.aptLimit = 0; // number of apartments shown in list
+  var perPage = 10;
+  $scope.loadMore = function() {
+    $scope.aptLimit += perPage;
+    if ($scope.aptLimit >= $scope.apts.length)
+      $scope.morePages = false;
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
 
   /* search */
-  $scope.filter = {
-    rent: 2000,
-    distance: 1000,
-    flooring: 'hardwood',
-    bed: 2,
-    bath: 4
-  };
-
-  $scope.search = function() {
-    var myPopup = $ionicPopup.show({
-      templateUrl: 'templates/list-search.html',
-      title: 'Search',
-      scope: $scope,
-      buttons: [
-        {
-          text: 'Close'
-        },
-        {
-          text: '<b>Search</b>',
-          type: 'button-positive',
-          onTap: function(e) {
-            if (!$scope.data.wifi) {
-              e.preventDefault();
-            } else {
-              return $scope.data.wifi;
-            }
-          }
-        }
-      ]
-    });
-  };
+  $scope.ranges = Search.ranges;
+  $scope.filter = {};
+  $scope.search = Search.show($scope);
 }])
 
-.controller('FavoritesCtrl', ['$scope', 'Favorites',
-function($scope, Favorites) {
-  Favorites.get().then(function(resp) {
-    $scope.apts = resp;
-    console.log($scope.apts);
+.controller('FavoritesCtrl', ['$scope', 'Favorites', 'Search',
+function($scope, Favorites, Search) {
+
+  $scope.apts = [];
+
+  Favorites.get().then(function(apts) {
+    $scope.apts = apts;
+    $scope.loadMore();
   });
+
+  /* lazy loading */
+  $scope.morePages = true;
+
+  $scope.aptLimit = 0; // number of apartments shown in list
+  var perPage = 10;
+  $scope.loadMore = function() {
+    $scope.aptLimit += perPage;
+    if ($scope.aptLimit >= $scope.apts.length)
+      $scope.morePages = false;
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+
+  /* search */
+  $scope.ranges = Search.ranges;
+  $scope.filter = {};
+  $scope.search = Search.show($scope);
 }])
 
 .controller('MapCtrl', ['$scope', 'Apartments', 'Maps',

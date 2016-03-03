@@ -34,6 +34,8 @@ function($http, $q, Images) {
       apt.image_path = Images.get('large', apt.entity_id);
       apt.thumbnail = Images.get('thumb', apt.entity_id);
 
+      // meters -> miles
+      apt.distance_to_campus = apt.distance_to_campus / 1609.34;
       return apt;
     });
   };
@@ -72,22 +74,10 @@ function($http, $q, Images) {
     return deferred.promise;
   };
 
-  var getPage = function(page) {
-    var perPage = 10;
-    var start = page * perPage;
-    var deferred = $q.defer();
-
-    waitForFetch(deferred, function() {
-      return apartments.slice(start, start + perPage);
-    });
-    return deferred.promise;
-  }
-
   return {
     getAll: getMain,
     getFeatured: getFeatured,
     getId: getId,
-    getPage: getPage,
   }
 }])
 
@@ -370,5 +360,101 @@ function($ionicModal, Maps, Favorites) {
     source: source
   };
 }])
+
+.factory('Search', ['$ionicPopup', 'SearchRanges',
+function($ionicPopup, SearchRanges) {
+
+  var show = function(scope) {
+
+    var closeBtn = {
+      text: 'Close',
+      type: 'button-dark button-outline'
+    };
+
+    var searchBtn = {
+      text: '<b>Done</b>',
+      type: 'button-positive',
+      onTap: function(e) {
+        console.log(scope.filter);
+      }
+    };
+
+    return function() {
+      $ionicPopup.show({
+        templateUrl: 'templates/search.html',
+        title: 'Filter Results',
+        scope: scope,
+        buttons: [searchBtn]
+      });
+    };
+  };
+
+  return {
+    show: show,
+    ranges: SearchRanges,
+  };
+}])
+
+.filter('SearchFilter', function() {
+  /* filter -> database property */
+  var map = {
+    rent: 'monthly_rent_avg',
+    distance: 'distance_to_campus'
+  };
+
+  return function(apts, filter) {
+    return apts.filter(function(apt) {
+      for (var key in filter) {
+        var curr = filter[key];
+        if (!curr)
+          continue;
+        var max = curr.max;
+        var min = curr.min;
+
+        var prop = map[key];
+        if (!prop)
+          continue;
+
+        var val = parseFloat(apt[prop]);
+        if (!val || val < min || val > max)
+          return false;
+      }
+      return true;
+    });
+  };
+})
+
+.constant('SearchRanges', (function() {
+
+  var max = Number.POSITIVE_INFINITY; // just in case
+  var min = Number.NEGATIVE_INFINITY;
+
+  return {
+    rent: [
+      { text: '< $1000', min: min, max: 1000 },
+      { text: '$1000 - $2000', min: 1000, max: 2000 },
+      { text: '$2000 - $3000', min: 2000, max: 3000 },
+      { text: '> $3000', min: 3000, max: max }
+    ],
+    distance: [
+      { text: '< .5 miles', min: min, max: 0.5 },
+      { text: '.5 - 1 miles', min: 0.5, max: 1.0 },
+      { text: '1 - 2 miles', min: 1, max: 2 },
+      { text: '> 2 miles', min: 2, max: max }
+    ],
+    bed: [
+      { text: '0', min: 0, max: 0 },
+      { text: '1', min: 1, max: 1 },
+      { text: '2', min: 2, max: 2 },
+      { text: '3+', min: 3, max: max }
+    ],
+    bath: [
+      { text: '0', min: 0, max: 0 },
+      { text: '1', min: 1, max: 1 },
+      { text: '2', min: 2, max: 2 },
+      { text: '3+', min: 3, max: max }
+    ],
+  };
+})())
 
 ;
