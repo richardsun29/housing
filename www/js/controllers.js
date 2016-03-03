@@ -18,8 +18,8 @@ function($scope, Apartments) {
   });
 }])
 
-.controller('ListCtrl', ['$scope', '$q', 'Apartments', 'Search',
-function($scope, $q, Apartments, Search) {
+.controller('ListCtrl', ['$scope', 'Apartments', 'Search',
+function($scope, Apartments, Search) {
 
   $scope.apts = [];
 
@@ -48,10 +48,30 @@ function($scope, $q, Apartments, Search) {
 
 .controller('FavoritesCtrl', ['$scope', 'Favorites', 'Search',
 function($scope, Favorites, Search) {
-  Favorites.get().then(function(resp) {
-    $scope.apts = resp;
-    console.log($scope.apts);
+
+  $scope.apts = [];
+
+  Favorites.get().then(function(apts) {
+    $scope.apts = apts;
+    $scope.loadMore();
   });
+
+  /* lazy loading */
+  $scope.morePages = true;
+
+  $scope.aptLimit = 0; // number of apartments shown in list
+  var perPage = 10;
+  $scope.loadMore = function() {
+    $scope.aptLimit += perPage;
+    if ($scope.aptLimit >= $scope.apts.length)
+      $scope.morePages = false;
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+  };
+
+  /* search */
+  $scope.ranges = Search.ranges;
+  $scope.filter = {};
+  $scope.search = Search.show($scope);
 }])
 
 .controller('MapCtrl', ['$scope', 'Apartments', 'Maps',
