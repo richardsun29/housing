@@ -375,23 +375,26 @@ function($ionicModal, Maps, Favorites) {
 function($ionicPopup, SearchRanges) {
 
   var show = function(scope) {
+
+    var closeBtn = {
+      text: 'Close',
+      type: 'button-dark button-outline'
+    };
+
+    var searchBtn = {
+      text: '<b>Search</b>',
+      type: 'button-positive',
+      onTap: function(e) {
+        console.log(scope.filter);
+      }
+    };
+
     return function() {
       $ionicPopup.show({
         templateUrl: 'templates/search.html',
         title: 'Search',
         scope: scope,
-        buttons: [
-          {
-            text: 'Close'
-          },
-          {
-            text: '<b>Search</b>',
-            type: 'button-positive',
-            onTap: function(e) {
-              console.log(scope.filter);
-            }
-          }
-        ]
+        buttons: [closeBtn, searchBtn]
       });
     };
   };
