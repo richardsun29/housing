@@ -1,7 +1,7 @@
 <ion-view view-title="Featured" class="featured">
   <ion-slides class="has-header">
     <ion-slide-page ng-repeat="apt in apts" class="slide"
-                    style="background-image:url({{apt.image_path}})"
+                    style="background-image:url({{apt.images.large}})"
                     ng-click="openModal(apt)">
     </ion-slide-page>
   </ion-slides>
