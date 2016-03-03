@@ -1,17 +1,24 @@
 <ion-view view-title="Apartments">
 
   <ion-nav-buttons side="secondary">
-    <button class="button button-icon icon ion-ios-search"
+    <button class="button button-icon icon ion-ios-settings"
       ng-click="search()">
     </button>
   </ion-nav-buttons>
 
 
   <ion-content>
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input ng-model="searchText" type="text" placeholder="Search...">
+    </label>
     <ion-list>
       <ion-item class="item-thumbnail-left"
-                ng-repeat="apt in apts | SearchFilter:filter |
-                           limitTo:aptLimit track by $index"
+                ng-repeat="apt in apts |
+                           SearchFilter:filter |
+                           filter:searchText |
+                           limitTo:aptLimit
+                           track by $index"
                 ng-click="openModal(apt)">
 
         <img ng-src="{{apt.thumbnail}}">

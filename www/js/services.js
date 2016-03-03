@@ -370,7 +370,7 @@ function($ionicPopup, SearchRanges) {
     };
 
     var searchBtn = {
-      text: '<b>Search</b>',
+      text: '<b>Done</b>',
       type: 'button-positive',
       onTap: function(e) {
         console.log(scope.filter);
@@ -380,9 +380,9 @@ function($ionicPopup, SearchRanges) {
     return function() {
       $ionicPopup.show({
         templateUrl: 'templates/search.html',
-        title: 'Search',
+        title: 'Filter Results',
         scope: scope,
-        buttons: [closeBtn, searchBtn]
+        buttons: [searchBtn]
       });
     };
   };
