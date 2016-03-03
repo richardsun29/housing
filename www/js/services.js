@@ -45,7 +45,10 @@ function($http, $q) {
     if (apt.image_path) {
       var images = {};
       sizes.forEach(function(size) {
-        images[size] = url + size + '/' + apt.image_path;
+        if (RegExp('http://').test(apt.image_path)) // if outside image is given
+          images[size] = apt.image_path;
+        else
+          images[size] = url + size + '/' + apt.image_path;
       });
       return images;
     }
