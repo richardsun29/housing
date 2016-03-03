@@ -17,7 +17,7 @@
     <ion-item ng-if="apt.description" ng-bind-html="apt.description"></ion-item>
 
     <ion-item ng-if="!apt.description">
-      <img class="full-image" ng-src="{{apt.image_path}}">
+      <img class="full-image" ng-src="{{apt.images.med}}">
 
       <div>
         <b>Address: </b><a href="{{mapsUrl}}">{{apt.address}}</a>
