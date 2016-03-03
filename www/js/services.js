@@ -235,17 +235,27 @@ function($ionicModal, Maps, Favorites) {
 
         /* maps */
         scope.mapsUrl = Maps.url(apt.address);
-        Maps.coords(apt.address).then(function(coords) {
-          var markers = [{
-            latitude: coords.latitude,
-            longitude: coords.longitude,
+        if (apt.latitude && apt.longitude) {
+          var coords = {
+            latitude: apt.latitude,
+            longitude: apt.longitude,
             id: 0
-          }];
-          scope.map = {
-            center: coords,
-            markers: markers
           };
-        });
+          scope.map = {
+            markers: [coords],
+            center: angular.copy(coords) // let map pan without moving marker
+          };
+        }
+        else {
+          // if not in database, get coords from google maps
+          Maps.coords(apt.address).then(function(coords) {
+            coords.id = 0;
+            scope.map = {
+              markers: [coords],
+              center: angular.copy(coords)
+            };
+          });
+        }
 
         /* favorites */
         scope.favorited = Favorites.isFavorited(scope.apt.id);
