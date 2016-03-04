@@ -46,34 +46,6 @@ function($scope, Apartments, Search) {
   $scope.search = Search.show($scope);
 }])
 
-.controller('FavoritesCtrl', ['$scope', 'Favorites', 'Search',
-function($scope, Favorites, Search) {
-
-  $scope.apts = [];
-
-  Favorites.get().then(function(apts) {
-    $scope.apts = apts;
-    $scope.loadMore();
-  });
-
-  /* lazy loading */
-  $scope.morePages = true;
-
-  $scope.aptLimit = 0; // number of apartments shown in list
-  var perPage = 10;
-  $scope.loadMore = function() {
-    $scope.aptLimit += perPage;
-    if ($scope.aptLimit >= $scope.apts.length)
-      $scope.morePages = false;
-    $scope.$broadcast('scroll.infiniteScrollComplete');
-  };
-
-  /* search */
-  $scope.ranges = Search.ranges;
-  $scope.filter = {};
-  $scope.search = Search.show($scope);
-}])
-
 .controller('MapCtrl', ['$scope', 'Apartments', 'Maps',
 function($scope, Apartments, Maps) {
   Apartments.getAll().then(function(apts) {
