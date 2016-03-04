@@ -1,7 +1,7 @@
 angular.module('services', ['ngStorage'])
 
-.factory('Apartments', ['$http', '$q',
-function($http, $q) {
+.factory('Apartments', ['$http', '$q', 'Favorites',
+function($http, $q, Favorites) {
   var endpoint = 'http://dev.bruinmobile.com/housing/getAptData.php';
 
   var apartments = [];
@@ -33,6 +33,9 @@ function($http, $q) {
 
       // image_path -> {large, med, small}
       apt.images = imgUrls(apt);
+
+      // favorite time
+      Favorites.setMtime(apt);
 
       // meters -> miles
       apt.distance_to_campus = apt.distance_to_campus / 1609.34;
@@ -112,7 +115,7 @@ function($localStorage, $q) {
     return true;
   };
 
-  var remote = function(apt) {
+  var remove = function(apt) {
     delete favorites[apt.id];
     delete apt.favorite_mtime;
     return false;
@@ -126,13 +129,20 @@ function($localStorage, $q) {
     return !!apt.favorite_mtime;
   };
 
+  // set favorite_mtime in the apartment object
+  var setMtime = function(apt) {
+    if (favorites[apt.id])
+      apt.favorite_mtime = favorites[apt.id];
+  };
+
   return {
     add: add,
     remove: remove,
     toggle: toggle,
-    isFavorited: isFavorited
+    isFavorited: isFavorited,
+    setMtime: setMtime
   };
-})
+}])
 
 .factory('Maps', ['$http', '$q',
 function($http, $q) {
@@ -233,7 +243,7 @@ function($ionicModal, Maps, Favorites) {
         }
 
         /* favorites */
-        scope.favorited = Favorites.isFavorited(scope.apt.id);
+        scope.favorited = Favorites.isFavorited(scope.apt);
 
       });
     };
@@ -241,7 +251,7 @@ function($ionicModal, Maps, Favorites) {
     /* favorites */
     scope.toggleFavorite = function() {
       if (scope.apt)
-        scope.favorited = Favorites.toggle(scope.apt.id);
+        scope.favorited = Favorites.toggle(scope.apt);
     };
 
     /* modal cleanup */
