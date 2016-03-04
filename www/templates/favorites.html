@@ -1,14 +1,31 @@
 <ion-view class="favorites" view-title="Favorites">
+
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-settings"
+      ng-click="search()">
+    </button>
+  </ion-nav-buttons>
+
   <ion-content>
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input ng-model="searchText" type="text" placeholder="Search...">
+    </label>
+
     <ion-list>
+      <ion-item class="item-thumbnail-left"
+                ng-repeat="apt in apts |
+                           filter: {favorite_mtime: '!!' } |
+                           orderBy:'-favorite_mtime' |
+                           SearchFilter:filter |
+                           filter:searchText |
+                           limitTo:aptLimit
+                           track by $index"
+                ng-click="openModal(apt)">
 
-      <ion-item class="item-thumbnail-left" ng-repeat="apt in apts"
-        ng-click="openModal(apt)">
-
-        <img ng-src="{{apt.thumbnail}}">
+        <img ng-src="{{apt.images.thumb}}">
         <h2>{{apt.address}}</h2>
         <p>Rent: {{apt.monthly_rent_avg | rent}}</p>
-
       </ion-item>
 
       <ion-item class="empty" ng-if="apts.length == 0">
@@ -19,5 +36,9 @@
       </ion-item>
 
     </ion-list>
+
+    <ion-infinite-scroll ng-if="morePages"
+       on-infinite="loadMore()" distance="0%" immediate-check="false">
+    </ion-infinite-scroll>
   </ion-content>
 </ion-view>

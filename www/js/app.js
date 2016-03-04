@@ -59,7 +59,7 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
     views: {
       'tab-favorites': {
         templateUrl: 'templates/favorites.html',
-        controller: 'FavoritesCtrl'
+        controller: 'ListCtrl'
       }
     }
   })
@@ -103,11 +103,11 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
 
 .filter('distance', function() {
   return function(input) {
-    var meters = parseFloat(input);
-    if (isNaN(meters) || meters == 0)
+    var miles = parseFloat(input);
+    if (isNaN(miles) || miles == 0)
       return 'Unavailable';
     else
-      return (meters/1609.34).toFixed(1) + ' mi.';
+      return miles.toFixed(2) + ' mi.';
   };
 })
 
