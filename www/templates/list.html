@@ -15,6 +15,7 @@
     <ion-list>
       <ion-item class="item-thumbnail-left"
                 ng-repeat="apt in apts |
+                           orderBy:'distance_to_campus' |
                            SearchFilter:filter |
                            filter:searchText |
                            limitTo:aptLimit

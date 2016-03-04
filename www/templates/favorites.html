@@ -15,6 +15,8 @@
     <ion-list>
       <ion-item class="item-thumbnail-left"
                 ng-repeat="apt in apts |
+                           filter: {favorite_mtime: '!!' } |
+                           orderBy:'-favorite_mtime' |
                            SearchFilter:filter |
                            filter:searchText |
                            limitTo:aptLimit
@@ -34,5 +36,9 @@
       </ion-item>
 
     </ion-list>
+
+    <ion-infinite-scroll ng-if="morePages"
+       on-infinite="loadMore()" distance="0%" immediate-check="false">
+    </ion-infinite-scroll>
   </ion-content>
 </ion-view>
