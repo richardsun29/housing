@@ -1,4 +1,4 @@
-angular.module('controllers', ['uiGmapgoogle-maps'])
+angular.module('controllers', ['uiGmapgoogle-maps', 'ngRangeSlider'])
 
 .controller('TabsCtrl', ['$state', '$scope', 'AptModal',
 function($state, $scope, AptModal) {
