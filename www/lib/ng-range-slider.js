@@ -109,32 +109,34 @@ function ngRangeSlider() {
         scope._model[1] = parseFloat(scope._model[1]);
 
         // User was moving the first slider.
-        if (scope._which === 0 && scope._model[1] < scope._model[0]) {
-          scope._model[1] = scope._model[0];
+        if (scope._which === 0 &&
+            scope._model[1] < scope._model[0] + scope._step) {
+          scope._model[1] = scope._model[0] + scope._step;
         }
 
         // Otherwise they were moving the second slider.
-        if (scope._which === 1 && scope._model[0] > scope._model[1]) {
-          scope._model[0] = scope._model[1];
+        if (scope._which === 1 &&
+            scope._model[0] > scope._model[1] - scope._step) {
+          scope._model[0] = scope._model[1] - scope._step;
         }
 
         // Constrain to the min/max values.
         (function constrainMinMax() {
 
           if (scope._model[0] < scope._values.min) {
-            scope._model[0] = scope._values.min
+            scope._model[0] = scope._values.min;
           }
 
-          if (scope._model[1] < scope._values.min) {
-            scope._model[1] = scope._values.min
+          if (scope._model[1] < scope._values.min + scope._step) {
+            scope._model[1] = scope._values.min + scope._step;
           }
 
-          if (scope._model[0] > scope._values.max) {
-            scope._model[0] = scope._values.max
+          if (scope._model[0] > scope._values.max - scope._step) {
+            scope._model[0] = scope._values.max - scope._step;
           }
 
           if (scope._model[1] > scope._values.max) {
-            scope._model[1] = scope._values.max
+            scope._model[1] = scope._values.max;
           }
 
         })();
