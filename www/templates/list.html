@@ -7,7 +7,7 @@
   </ion-nav-buttons>
 
   <ion-content ng-init="range={from:0, to:10}">
-    <section class="range-slider" data-range-slider ng-model="range" throttle="1500"></section>
+    <range-slider ng-model="range" throttle="1500"></range-slider>
     <label class="item item-input">
       <i class="icon ion-search placeholder-icon"></i>
       <input ng-model="searchText" type="text" placeholder="Search...">
