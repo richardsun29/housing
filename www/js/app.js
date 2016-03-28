@@ -118,9 +118,13 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
 })
 
 // At most 2 decimal places
-.filter('round', function() {
+.filter('rangeFilter', function() {
+  var round = function(x) {
+    return (Math.round(x * 100) / 100).toString();
+  };
+
   return function(input) {
-    return Math.round(input * 100) / 100;
+    return round(input.from) + ' - ' + round(input.to);
   };
 })
 

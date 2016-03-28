@@ -2,7 +2,7 @@
 
   <div ng-repeat="(type, range) in ranges"
     ng-init="filter[type] = {from: range.min, to:range.max}; f = filter[type]">
-    <label>{{range.text}}: {{f.from | round}} - {{f.to | round}}</label>
+    <label>{{range.text}}: {{f | rangeFilter}}</label>
     <range-slider ng-model="f" throttle="50"
         step="range.step" min="range.min" max="range.max">
     </range-slider>
