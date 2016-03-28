@@ -44,6 +44,7 @@ function($scope, Apartments, Search) {
   $scope.ranges = Search.ranges;
   $scope.filter = {};
   $scope.search = Search.show($scope);
+  $scope.search();
 }])
 
 .controller('MapCtrl', ['$scope', 'Apartments', 'Maps',

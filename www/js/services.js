@@ -337,9 +337,6 @@ function($ionicPopup, SearchRanges) {
 
 .constant('SearchRanges', (function() {
 
-  var max = Number.POSITIVE_INFINITY; // just in case
-  var min = Number.NEGATIVE_INFINITY;
-
   return {
     rent: {
       text: 'Monthly Rent',
@@ -351,21 +348,21 @@ function($ionicPopup, SearchRanges) {
     distance: {
       text: 'Distance to campus',
       min: 0,
-      max: 3,
+      max: 5,
       step: 0.1,
       selected: {}
     },
     bed: {
       text: 'Bedrooms',
       min: 0,
-      max: 3,
+      max: 5,
       step: 1,
       selected: {}
     },
     bath: {
       text: 'Bathrooms',
       min: 0,
-      max: 3,
+      max: 5,
       step: 1,
       selected: {}
     }
