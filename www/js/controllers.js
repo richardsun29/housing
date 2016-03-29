@@ -2,10 +2,6 @@ angular.module('controllers', ['uiGmapgoogle-maps', 'ngRangeSlider'])
 
 .controller('TabsCtrl', ['$state', '$scope', 'AptModal',
 function($state, $scope, AptModal) {
-  $scope.goto = function(state, params) {
-    $state.go(state, params);
-  };
-
   /* Modal Detail */
   AptModal.source.call($scope);
 }])
@@ -14,7 +10,6 @@ function($state, $scope, AptModal) {
 function($scope, Apartments) {
   Apartments.getFeatured().then(function(response) {
     $scope.apts = response;
-    console.log($scope.apts);
   });
 }])
 

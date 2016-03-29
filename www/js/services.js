@@ -272,37 +272,57 @@ function($ionicModal, Maps, Favorites) {
   };
 }])
 
-.factory('Search', ['$ionicPopup', 'SearchRanges',
-function($ionicPopup, SearchRanges) {
+.factory('Search', ['$ionicPopup',
+function($ionicPopup) {
+
+  var ranges = {
+      rent: {
+        text: 'Monthly Rent',
+        min: 0,
+        max: 5000,
+        step: 100
+      },
+      distance: {
+        text: 'Distance to campus',
+        min: 0,
+        max: 3,
+        step: 0.1
+      },
+      bed: {
+        text: 'Bedrooms',
+        min: 0,
+        max: 5,
+        step: 1
+      },
+      bath: {
+        text: 'Bathrooms',
+        min: 0,
+        max: 5,
+        step: 1
+      }
+  };
 
   var show = function(scope) {
-
-    var closeBtn = {
-      text: 'Close',
-      type: 'button-dark button-outline'
-    };
-
-    var searchBtn = {
-      text: '<b>Done</b>',
-      type: 'button-positive',
-    };
-
     return function() {
       $ionicPopup.show({
         templateUrl: 'templates/search.html',
         title: 'Filter Results',
         scope: scope,
-        buttons: [searchBtn]
+        buttons: [{
+          text: '<b>Done</b>',
+          type: 'button-positive',
+        }]
       });
     };
   };
 
   var filter = {};
+
   var clearFilters = function() {
-    for (var i in SearchRanges) {
+    for (var i in ranges) {
       filter[i] = {
-        from: SearchRanges[i].min,
-        to:   SearchRanges[i].max
+        from: ranges[i].min,
+        to:   ranges[i].max
       };
     }
   };
@@ -310,7 +330,7 @@ function($ionicPopup, SearchRanges) {
 
   return {
     show: show,
-    ranges: SearchRanges,
+    ranges: ranges,
     filter: filter,
     clearFilters: clearFilters
   };
@@ -344,39 +364,5 @@ function($ionicPopup, SearchRanges) {
     });
   };
 })
-
-.constant('SearchRanges', (function() {
-
-  return {
-    rent: {
-      text: 'Monthly Rent',
-      min: 0,
-      max: 5000,
-      step: 100,
-      selected: {}
-    },
-    distance: {
-      text: 'Distance to campus',
-      min: 0,
-      max: 3,
-      step: 0.1,
-      selected: {}
-    },
-    bed: {
-      text: 'Bedrooms',
-      min: 0,
-      max: 5,
-      step: 1,
-      selected: {}
-    },
-    bath: {
-      text: 'Bathrooms',
-      min: 0,
-      max: 5,
-      step: 1,
-      selected: {}
-    }
-  };
-})())
 
 ;
