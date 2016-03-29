@@ -1,4 +1,4 @@
-angular.module('controllers', ['uiGmapgoogle-maps'])
+angular.module('controllers', ['uiGmapgoogle-maps', 'ngRangeSlider'])
 
 .controller('TabsCtrl', ['$state', '$scope', 'AptModal',
 function($state, $scope, AptModal) {
@@ -41,9 +41,11 @@ function($scope, Apartments, Search) {
   };
 
   /* search */
+  $scope.clearFilters = Search.clearFilters;
+  $scope.filter = Search.filter;
   $scope.ranges = Search.ranges;
-  $scope.filter = {};
   $scope.search = Search.show($scope);
+  //$scope.search();
 }])
 
 .controller('MapCtrl', ['$scope', 'Apartments', 'Maps',
