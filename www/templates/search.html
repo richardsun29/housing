@@ -1,7 +1,6 @@
 <div class="search">
 
-  <div ng-repeat="(type, range) in ranges"
-    ng-init="filter[type] = {from: range.min, to:range.max}">
+  <div ng-repeat="(type, range) in ranges">
     <label>{{range.text}}: {{filter[type] | rangeFilter}}</label>
     <range-slider ng-model="filter[type]" throttle="50"
         step="range.step" min="range.min" max="range.max">

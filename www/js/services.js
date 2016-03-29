@@ -297,9 +297,22 @@ function($ionicPopup, SearchRanges) {
     };
   };
 
+  var filter = {};
+  var clearFilters = function() {
+    for (var i in SearchRanges) {
+      filter[i] = {
+        from: SearchRanges[i].min,
+        to:   SearchRanges[i].max
+      };
+    }
+  };
+  clearFilters();
+
   return {
     show: show,
-    ranges: SearchRanges
+    ranges: SearchRanges,
+    filter: filter,
+    clearFilters: clearFilters
   };
 }])
 

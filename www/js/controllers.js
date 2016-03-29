@@ -41,17 +41,8 @@ function($scope, Apartments, Search) {
   };
 
   /* search */
-  $scope.clearFilters = function() {
-    for (var i in Search.ranges) {
-      $scope.filter[i] = {
-        from: Search.ranges[i].min,
-        to:   Search.ranges[i].max
-      };
-    }
-  };
-  $scope.filter = {};
-  $scope.clearFilters();
-
+  $scope.clearFilters = Search.clearFilters;
+  $scope.filter = Search.filter;
   $scope.ranges = Search.ranges;
   $scope.search = Search.show($scope);
   //$scope.search();
