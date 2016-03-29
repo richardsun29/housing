@@ -7,29 +7,13 @@ function ngRangeSlider() {
     restrict: 'EA',
     controller: ['$scope', function controller($scope) {
 
-      $scope.iter = function iter(max) {
-        var iterator = [];
-        for (var index = 0; index <= max; index++) {
-          iterator.push(index);
-        }
-        return iterator;
-      };
-
       $scope._notInRunLoop = function _notInRunLoop() {
         return !$scope.$root.$$phase;
       };
 
-      /*
-       * Determines whether Underscore/Lo-Dash is available, and the
-       * `throttle` method is available on the object.
-       */
-      $scope._supportThrottle = function _supportThrottle() {
-        return (angular.isDefined(_) && typeof _.throttle === 'function');
-      };
-
     }],
 
-    template: '<section class="range-slider"><datalist id="numbers"><option ng-repeat="index in iter(max)">{{index}}</option></datalist><input list="numbers" type="range" ng-change="_which = 0" ng-model="_model[0]" min="{{_values.min}}" max="{{_values.max}}" step="{{_step}}" /><input type="range" ng-change="_which = 1" ng-model="_model[1]" min="{{_values.min}}" max="{{_values.max}}" step="{{_step}}" /></section>',
+    template: '<section class="range-slider"><input list="numbers" type="range" ng-change="_which = 0" ng-model="_model[0]" min="{{_values.min}}" max="{{_values.max}}" step="{{_step}}" /><input type="range" ng-change="_which = 1" ng-model="_model[1]" min="{{_values.min}}" max="{{_values.max}}" step="{{_step}}" /></section>',
 
     replace: true,
     require: 'ngModel',
@@ -96,9 +80,8 @@ function ngRangeSlider() {
         }
       };
 
-      if (scope.throttle && scope._supportThrottle()) {
-        // Use the throttled version if we support it, and the developer
-        // has defined the throttle attribute.
+      if (scope.throttle) {
+        // Use the throttled version throttle attribute was defined
         _updateModel = _.throttle(_updateModel, parseFloat(scope.throttle));
       }
 

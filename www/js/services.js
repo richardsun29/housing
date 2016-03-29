@@ -303,8 +303,7 @@ function($ionicPopup) {
   };
 
   var show = function(scope) {
-    return function() {
-      $ionicPopup.show({
+    var popup = {
         templateUrl: 'templates/search.html',
         title: 'Filter Results',
         scope: scope,
@@ -312,19 +311,18 @@ function($ionicPopup) {
           text: '<b>Done</b>',
           type: 'button-positive',
         }]
-      });
+    };
+
+    return function() {
+      $ionicPopup.show(popup);
     };
   };
 
   var filter = {};
 
   var clearFilters = function() {
-    for (var i in ranges) {
-      filter[i] = {
-        from: ranges[i].min,
-        to:   ranges[i].max
-      };
-    }
+    for (var i in ranges)
+      filter[i] = { from: ranges[i].min, to: ranges[i].max };
   };
   clearFilters();
 
