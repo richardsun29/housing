@@ -285,9 +285,6 @@ function($ionicPopup, SearchRanges) {
     var searchBtn = {
       text: '<b>Done</b>',
       type: 'button-positive',
-      onTap: function(e) {
-        console.log(scope.filter);
-      }
     };
 
     return function() {
@@ -319,8 +316,8 @@ function($ionicPopup, SearchRanges) {
         var curr = filter[key];
         if (!curr)
           continue;
-        var max = curr.max;
-        var min = curr.min;
+        var min = curr.from;
+        var max = curr.to;
 
         var prop = map[key];
         if (!prop)
@@ -341,14 +338,14 @@ function($ionicPopup, SearchRanges) {
     rent: {
       text: 'Monthly Rent',
       min: 0,
-      max: 3000,
+      max: 5000,
       step: 100,
       selected: {}
     },
     distance: {
       text: 'Distance to campus',
       min: 0,
-      max: 5,
+      max: 3,
       step: 0.1,
       selected: {}
     },
