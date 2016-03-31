@@ -288,6 +288,7 @@ function($ionicPopup) {
         max: 3,
         step: 0.1
       },
+      /*
       bed: {
         text: 'Bedrooms',
         min: 0,
@@ -300,6 +301,7 @@ function($ionicPopup) {
         max: 5,
         step: 1
       }
+      */
   };
 
   var show = function(scope) {
