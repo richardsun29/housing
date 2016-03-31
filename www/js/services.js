@@ -272,37 +272,67 @@ function($ionicModal, Maps, Favorites) {
   };
 }])
 
-.factory('Search', ['$ionicPopup', 'SearchRanges',
-function($ionicPopup, SearchRanges) {
+.factory('Search', ['$ionicPopup',
+function($ionicPopup) {
+
+  var ranges = {
+      rent: {
+        text: 'Monthly Rent',
+        min: 0,
+        max: 5000,
+        step: 100
+      },
+      distance: {
+        text: 'Distance to campus',
+        min: 0,
+        max: 3,
+        step: 0.1
+      },
+      /*
+      bed: {
+        text: 'Bedrooms',
+        min: 0,
+        max: 5,
+        step: 1
+      },
+      bath: {
+        text: 'Bathrooms',
+        min: 0,
+        max: 5,
+        step: 1
+      }
+      */
+  };
 
   var show = function(scope) {
-
-    var closeBtn = {
-      text: 'Close',
-      type: 'button-dark button-outline'
-    };
-
-    var searchBtn = {
-      text: '<b>Done</b>',
-      type: 'button-positive',
-      onTap: function(e) {
-        console.log(scope.filter);
-      }
-    };
-
-    return function() {
-      $ionicPopup.show({
+    var popup = {
         templateUrl: 'templates/search.html',
         title: 'Filter Results',
         scope: scope,
-        buttons: [searchBtn]
-      });
+        buttons: [{
+          text: '<b>Done</b>',
+          type: 'button-positive',
+        }]
+    };
+
+    return function() {
+      $ionicPopup.show(popup);
     };
   };
 
+  var filter = {};
+
+  var clearFilters = function() {
+    for (var i in ranges)
+      filter[i] = { from: ranges[i].min, to: ranges[i].max };
+  };
+  clearFilters();
+
   return {
     show: show,
-    ranges: SearchRanges,
+    ranges: ranges,
+    filter: filter,
+    clearFilters: clearFilters
   };
 }])
 
@@ -319,8 +349,8 @@ function($ionicPopup, SearchRanges) {
         var curr = filter[key];
         if (!curr)
           continue;
-        var max = curr.max;
-        var min = curr.min;
+        var min = curr.from;
+        var max = curr.to;
 
         var prop = map[key];
         if (!prop)
@@ -334,38 +364,5 @@ function($ionicPopup, SearchRanges) {
     });
   };
 })
-
-.constant('SearchRanges', (function() {
-
-  var max = Number.POSITIVE_INFINITY; // just in case
-  var min = Number.NEGATIVE_INFINITY;
-
-  return {
-    rent: [
-      { text: '< $1000', min: min, max: 1000 },
-      { text: '$1000 - $2000', min: 1000, max: 2000 },
-      { text: '$2000 - $3000', min: 2000, max: 3000 },
-      { text: '> $3000', min: 3000, max: max }
-    ],
-    distance: [
-      { text: '< .5 miles', min: min, max: 0.5 },
-      { text: '.5 - 1 miles', min: 0.5, max: 1.0 },
-      { text: '1 - 2 miles', min: 1, max: 2 },
-      { text: '> 2 miles', min: 2, max: max }
-    ],
-    bed: [
-      { text: '0', min: 0, max: 0 },
-      { text: '1', min: 1, max: 1 },
-      { text: '2', min: 2, max: 2 },
-      { text: '3+', min: 3, max: max }
-    ],
-    bath: [
-      { text: '0', min: 0, max: 0 },
-      { text: '1', min: 1, max: 1 },
-      { text: '2', min: 2, max: 2 },
-      { text: '3+', min: 3, max: max }
-    ],
-  };
-})())
 
 ;

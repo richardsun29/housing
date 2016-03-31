@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'controllers', 'services'])
+angular.module('starter', ['ionic', 'controllers', 'services', 'filters'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -79,42 +79,6 @@ angular.module('starter', ['ionic', 'controllers', 'services'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/featured');
 
-})
-
-.directive('listSearch', function() {
-  return {
-    restrict: 'E',
-    scope: {
-      filter: '=filter'
-    },
-    templateUrl: 'templates/list-search.html'
-  };
-})
-
-.filter('rent', function() {
-  return function(input) {
-    var num = parseFloat(input);
-    if (isNaN(num) || num == 0)
-      return 'Unavailable';
-    else
-      return '$' + input;
-  };
-})
-
-.filter('distance', function() {
-  return function(input) {
-    var miles = parseFloat(input);
-    if (isNaN(miles) || miles == 0)
-      return 'Unavailable';
-    else
-      return miles.toFixed(2) + ' mi.';
-  };
-})
-
-.filter('contact', function() {
-  return function(input) {
-    return input || 'Unavailable';
-  }
 })
 
 ;

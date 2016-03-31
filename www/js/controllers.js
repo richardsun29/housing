@@ -1,11 +1,7 @@
-angular.module('controllers', ['uiGmapgoogle-maps'])
+angular.module('controllers', ['uiGmapgoogle-maps', 'ngRangeSlider'])
 
 .controller('TabsCtrl', ['$state', '$scope', 'AptModal',
 function($state, $scope, AptModal) {
-  $scope.goto = function(state, params) {
-    $state.go(state, params);
-  };
-
   /* Modal Detail */
   AptModal.source.call($scope);
 }])
@@ -14,7 +10,6 @@ function($state, $scope, AptModal) {
 function($scope, Apartments) {
   Apartments.getFeatured().then(function(response) {
     $scope.apts = response;
-    console.log($scope.apts);
   });
 }])
 
@@ -41,9 +36,11 @@ function($scope, Apartments, Search) {
   };
 
   /* search */
+  $scope.clearFilters = Search.clearFilters;
+  $scope.filter = Search.filter;
   $scope.ranges = Search.ranges;
-  $scope.filter = {};
   $scope.search = Search.show($scope);
+  //$scope.search();
 }])
 
 .controller('MapCtrl', ['$scope', 'Apartments', 'Maps',

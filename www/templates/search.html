@@ -1,39 +1,14 @@
 <div class="search">
 
-  <div>
-    <label>Monthly Rent: </label>
-    <select ng-model="filter.rent"
-      ng-options="option.text for option in ranges.rent">
-      <option value="">Any</option>
-    </select>
-  </div>
-
-  <div>
-    <label>Distance to campus: </label>
-    <select ng-model="filter.distance"
-      ng-options="option.text for option in ranges.distance">
-      <option value="">Any</option>
-    </select>
-  </div>
-
-  <div>
-    <label>Bedrooms: </label>
-    <select ng-model="filter.bed"
-      ng-options="option.text for option in ranges.bed">
-      <option value="">Any</option>
-    </select>
-  </div>
-
-  <div>
-    <label>Bathrooms: </label>
-    <select ng-model="filter.bath"
-      ng-options="option.text for option in ranges.bath">
-      <option value="">Any</option>
-    </select>
+  <div ng-repeat="(type, range) in ranges">
+    <label>{{range.text}}: {{filter[type] | rangeFilter}}</label>
+    <range-slider ng-model="filter[type]" throttle="70"
+        step="range.step" min="range.min" max="range.max">
+    </range-slider>
   </div>
 
   <button class="button button-outline button-small button-block button-dark"
-          ng-click="$parent.filter={}">
+          ng-click="clearFilters()">
     Clear Filters
   </button>
 
