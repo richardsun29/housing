@@ -8,17 +8,19 @@
 
   <ion-content>
 
-    <label class="item item-input">
+    <div class="item item-input">
       <i class="icon ion-search placeholder-icon"></i>
       <input ng-model="searchText" type="text" placeholder="Search...">
-    </label>
+      <i ng-click="searchText=''" style="cursor:pointer"
+                                  class="icon ion-close placeholder-icon"></i>
+    </div>
 
     <ion-list>
       <ion-item class="item-thumbnail-left"
                 ng-repeat="apt in apts |
-                           orderBy:'distance_to_campus' |
                            SearchFilter:filter |
                            filter:searchText |
+                           orderBy:'distance_to_campus' |
                            limitTo:aptLimit
                            track by $index"
                 ng-click="openModal(apt)">
