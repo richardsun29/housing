@@ -1,3 +1,11 @@
-.angular-google-map-container {
-  height: 50vw;
+.detail {
+  .angular-google-map-container {
+    height: 50vw;
+  }
+
+  .full-image {
+    max-height: 50vh;
+    width: 100%;
+    object-fit: cover;
+  }
 }
